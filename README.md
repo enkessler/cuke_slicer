@@ -1,6 +1,8 @@
 # CukeSlicer
 
-TODO: Write a gem description
+The cuke_slicer gem provides an easy and programmatic way to divide a Cucumber test suite into granular test
+cases that can then be dealt with on an individual basis. Often this means handing them off to a distributed
+testing system in order to parallelize test execution.
 
 ## Installation
 
@@ -18,7 +20,29 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+    require 'cuke_slicer'
+
+
+    # Choose which part of your test suite that you want to slice up
+    test_directory = 'path/to/your_test_directory'
+
+    # Choose your slicing filters
+    filters = {excluded_tags: '@tag1 | @tag2',
+               included_tags: '@tag3',
+               excluded_paths: ['foo'],
+               included_paths: [/test_directory/]}
+
+    # Use the slicer to find all tests matching those filters
+    found_tests = CukeSlicer::Slicer.new.slice(test_directory, filters)
+
+
+    # Arrange the sliced pieces to suit your particular needs. In this case, we will dump them
+    # into a file that Cucumber can consume.
+
+    File.open('tests_to_run.txt', 'w') { |file| file.puts found_tests }
+
+    system('cucumber @tests_to_run.txt')
+
 
 ## Contributing
 
