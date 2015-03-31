@@ -1,5 +1,5 @@
 require 'simplecov'
-SimpleCov.command_name('rspec_tests')
+SimpleCov.command_name('cuke_slicer-rspec_tests')
 
 
 require 'cuke_slicer'
@@ -7,7 +7,8 @@ require 'cuke_slicer'
 
 RSpec.configure do |config|
   config.before(:all) do
-    @default_file_directory = "#{File.dirname(__FILE__)}/temp_files"
+    spec_directory = File.dirname(__FILE__)
+    @default_file_directory = "#{spec_directory}/temp_files"
   end
 
   config.before(:each) do

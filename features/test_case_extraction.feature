@@ -1,7 +1,7 @@
 Feature: Test case extraction
 
-  Test cases can be extracted from a source file or directory and packaged in a collection
-  of 'file:line' items that can then be conveniently arranged for consumption by Cucumber.
+  Test cases can be extracted from a source file or directory as a collection of 'file:line' items that
+  can then be conveniently arranged for consumption by some other tool (e.g. Cucumber).
 
 
   Scenario: Extraction from a file
@@ -22,8 +22,8 @@ Feature: Test case extraction
           | param | value |
           | c     | 3     |
       """
-    When test cases are extracted from "a_test.feature"
-    Then the following test cases are found for "a_test.feature":
+    When test cases are extracted from it
+    Then the following test cases are found
       | path/to/a_test.feature:3  |
       | path/to/a_test.feature:10 |
       | path/to/a_test.feature:11 |
@@ -37,11 +37,8 @@ Feature: Test case extraction
     And the following feature file "really_empty.feature":
       """
       """
-    When test cases are extracted from "empty.feature"
-    And test cases are extracted from "really_empty.feature"
-    Then no test cases are found for "empty.feature"
-    And no test cases are found for "really_empty.feature"
-
+    When test cases are extracted from them
+    Then no test cases are found
 
   Scenario: Extraction from a directory
     Given the directory "test_directory"
@@ -65,7 +62,7 @@ Feature: Test case extraction
           * some steps
       """
     When test cases are extracted from "test_directory"
-    Then the following test cases are found for "test_directory":
+    Then the following test cases are found
       | path/to/test_directory/a_test.feature:7                        |
       | path/to/test_directory/a_test.feature:8                        |
       | path/to/test_directory/nested_directory/another_test.feature:3 |
@@ -76,13 +73,6 @@ Feature: Test case extraction
       """
       Feature: WIP
       """
-    And the following feature file "really_empty.feature":
-      """
-      """
-    And the following feature file "not_a_feature.file":
-      """
-      Some irrelevant file.
-      """
     And the directory "test_directory/empty_directory"
     When test cases are extracted from "test_directory"
-    Then no test cases are found for "test_directory"
+    Then no test cases are found

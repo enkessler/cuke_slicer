@@ -5,13 +5,20 @@ module CukeSlicer
       validate_target(target)
       validate_filters(filters)
 
-      target = File.directory?(target) ? CukeModeler::Directory.new(target) : CukeModeler::FeatureFile.new(target)
+
+      begin
+        target = File.directory?(target) ? CukeModeler::Directory.new(target) : CukeModeler::FeatureFile.new(target)
+      rescue Gherkin::Lexer::LexingError
+        raise(ArgumentError, "A syntax or lexing problem was encountered while trying to parse #{target}")
+      end
 
       if target.is_a?(CukeModeler::Directory)
-        extract_test_cases_from_directory(target, filters, &block)
+        sliced_tests = extract_test_cases_from_directory(target, filters, &block)
       else
-        extract_test_cases_from_file(target, filters, &block)
+        sliced_tests = extract_test_cases_from_file(target, filters, &block)
       end
+
+      sliced_tests
     end
 
     def self.known_filters
@@ -32,21 +39,33 @@ module CukeSlicer
     def validate_filters(filter_sets)
       filter_sets.each do |filter_type, filter_value|
         raise(ArgumentError, "Unknown filter '#{filter_type}'") unless self.class.known_filters.include?(filter_type)
+        raise(ArgumentError, "Invalid filter '#{filter_value}'. Must be a String, Regexp, or Array thereof. Got #{filter_value.class}") unless filter_value.is_a?(String) or filter_value.is_a?(Regexp) or filter_value.is_a?(Array)
 
-        case
-          when filter_type.to_s =~ /tag/
-            raise(ArgumentError, "Filter '#{filter_value}' must be a String. Got #{filter_value.class}") unless filter_value.is_a?(String)
-          when filter_type.to_s =~ /path/
-            raise(ArgumentError, "Filter '#{filter_value}' must be a String, Regexp, or Array thereof. Got #{filter_value.class}") unless filter_value.is_a?(String) or filter_value.is_a?(Regexp) or filter_value.is_a?(Array)
-
-            if filter_value.is_a?(Array)
-              filter_value.each do |filter|
-                raise(ArgumentError, "Filter '#{filter}' must be a String or Regexp. Got #{filter.class}") unless filter.is_a?(String) or filter.is_a?(Regexp)
-              end
-            end
-          else
-            # Previous validation prevents this from ever happening
+        if filter_value.is_a?(Array)
+          validate_tag_collection(filter_value) if filter_type.to_s =~ /tag/
+          validate_path_collection(filter_value) if filter_type.to_s =~ /path/
         end
+      end
+    end
+
+    def validate_tag_collection(filter_collection)
+      filter_collection.each do |filter|
+        raise(ArgumentError, "Filter '#{filter}' must be a String, Regexp, or Array. Got #{filter.class}") unless filter.is_a?(String) or filter.is_a?(Regexp) or filter.is_a?(Array)
+
+        validate_nested_tag_collection(filter) if filter.is_a?(Array)
+      end
+    end
+
+    def validate_nested_tag_collection(filter_collection)
+      filter_collection.each do |filter|
+        raise(ArgumentError, "Tag filters cannot be nested more than one level deep.") if filter.is_a?(Array)
+        raise(ArgumentError, "Filter '#{filter}' must be a String or Regexp. Got #{filter.class}") unless filter.is_a?(String) or filter.is_a?(Regexp)
+      end
+    end
+
+    def validate_path_collection(filter_collection)
+      filter_collection.each do |filter|
+        raise(ArgumentError, "Filter '#{filter}' must be a String or Regexp. Got #{filter.class}") unless filter.is_a?(String) or filter.is_a?(Regexp)
       end
     end
 
@@ -97,12 +116,10 @@ module CukeSlicer
           end
         end
 
-        filter_excluded_paths(elements, *filters[:excluded_paths])
-        filter_included_paths(elements, *filters[:included_paths])
+        filter_excluded_paths(elements, filters[:excluded_paths])
+        filter_included_paths(elements, filters[:included_paths])
         filter_excluded_tags(elements, filters[:excluded_tags])
         filter_included_tags(elements, filters[:included_tags])
-
-        elements
       end
     end
 
@@ -128,49 +145,78 @@ module CukeSlicer
     end
 
     def filter_excluded_tags(elements, filters)
-      if filters && !filters.empty?
-        elements.reject! do |element|
-          matching_tag?(element, filters)
+      if filters
+        filters = [filters] unless filters.is_a?(Array)
+
+        unless filters.empty?
+          elements.reject! do |element|
+            matching_tag?(element, filters)
+          end
         end
       end
     end
 
     def filter_included_tags(elements, filters)
-      if filters && !filters.empty?
+      if filters
+        filters = [filters] unless filters.is_a?(Array)
+
         elements.keep_if do |element|
           matching_tag?(element, filters)
         end
       end
     end
 
-    def filter_excluded_paths(elements, *filters)
-      if filters && !filters.empty?
+    def filter_excluded_paths(elements, filters)
+      if filters
+        filters = [filters] unless filters.is_a?(Array)
+
         elements.reject! do |element|
           matching_path?(element, filters)
         end
       end
     end
 
-    def filter_included_paths(elements, *filters)
-      if filters && !filters.empty?
-        elements.keep_if do |element|
-          matching_path?(element, filters)
+    def filter_included_paths(elements, filters)
+      if filters
+        filters = [filters] unless filters.is_a?(Array)
+
+        unless filters.empty?
+          elements.keep_if do |element|
+            matching_path?(element, filters)
+          end
         end
       end
     end
 
-    def matching_tag?(element, and_or_filters)
-      or_filters = and_or_filters.split('&')
-
-      or_filters.all? do |filter_set|
-        filter_set.split('|').any? do |filtered_tag|
-          if filtered_tag.start_with?('/')
-            pattern = Regexp.new(filtered_tag.slice(1..-2))
-            element.all_tags.any? { |tag| tag =~ pattern }
-          else
-            element.all_tags.include?(filtered_tag)
-          end
+    def matching_tag?(element, filters)
+      filters.each do |filter|
+        if filter.is_a?(Array)
+          filter_match = or_filter_match(element, filter)
+        else
+          filter_match = and_filter_match(element, filter)
         end
+
+        return false unless filter_match
+      end
+
+      true
+    end
+
+    def and_filter_match(element, filter)
+      filter_match(element, filter)
+    end
+
+    def or_filter_match(element, filters)
+      filters.any? do |filter|
+        filter_match(element, filter)
+      end
+    end
+
+    def filter_match(element, filter)
+      if filter.is_a?(Regexp)
+        element.all_tags.any? { |tag| tag =~ filter }
+      else
+        element.all_tags.include?(filter)
       end
     end
 

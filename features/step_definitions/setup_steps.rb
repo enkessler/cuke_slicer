@@ -1,6 +1,9 @@
-Given(/^the following feature file "([^"]*)":$/) do |file_name, file_text|
+Given(/^the following feature file(?: "([^"]*)")?:$/) do |file_name, file_text|
   @test_directory ||= @default_file_directory
   file_name ||= @default_feature_file_name
+
+  @targets ||= []
+  @targets << file_name
 
   File.open("#{@test_directory}/#{file_name}", 'w') { |file| file.write(file_text) }
 end
@@ -42,4 +45,35 @@ end
 
 And(/^the following custom filter:$/) do |filter|
   @custom_filter = eval("Proc.new #{filter}")
+end
+
+Given(/^the file "([^"]*)" does not exist$/) do |file_name|
+  @test_directory ||= @default_file_directory
+
+  @targets ||= []
+  @targets << file_name
+
+  file_path = "#{@test_directory}/#{file_name}"
+  FileUtils.rm(file_path) if File.exists?(file_path)
+end
+
+Given(/^the directory "([^"]*)" does not exist$/) do |directory_name|
+  @targets ||= []
+  @targets << directory_name
+
+  file_path = "#{@default_file_directory}/#{directory_name}"
+  FileUtils.remove_dir(file_path) if File.exists?(file_path)
+end
+
+And(/^the file "([^"]*)"$/) do |file_name|
+  @test_directory ||= @default_file_directory
+
+  @targets ||= []
+  @targets << file_name
+
+  File.open("#{@test_directory}/#{file_name}", 'w') { |file| file.write('') }
+end
+
+Given(/^a slicer$/) do
+  @slicer = CukeSlicer::Slicer.new
 end

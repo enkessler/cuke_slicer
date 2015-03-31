@@ -10,42 +10,61 @@ When(/^test cases are extracted from "([^"]*)"$/) do |target|
   @output[target] = CukeSlicer::Slicer.new.slice("#{@default_file_directory}/#{target}", filters, &@custom_filter)
 end
 
-When(/^test cases are extracted from "([^"]*)" using the following tag filters:$/) do |target, filters|
+When(/^test cases are extracted from it$/) do
+  @output ||= {}
+  filters = {}
+  target = @targets.first
+
+  begin
+    @output[target] = CukeSlicer::Slicer.new.slice("#{@default_file_directory}/#{target}", filters)
+  rescue ArgumentError => e
+    @error_raised = e
+  end
+end
+
+When(/^test cases are extracted from them$/) do
+  @output ||= {}
+  filters = {}
+
+  @targets.each do |target|
+    @output[target] = CukeSlicer::Slicer.new.slice("#{@default_file_directory}/#{target}", filters)
+  end
+end
+
+When(/^test cases are extracted from "([^"]*)" using the following exclusive tag filters:$/) do |target, filters|
   @output ||= {}
   options = {}
 
-  filters.hashes.each do |filter|
-    case filter['filter type']
-      when 'excluded'
-        options[:excluded_tags] = filter['filter']
-      when 'included'
-        options[:included_tags] = filter['filter']
-      else
-        raise("Unknown filter type #{filter['filter type']}")
-    end
-  end
+  options[:excluded_tags] = filters.raw.flatten.collect { |filter| process_filter(filter) }
 
   @output[target] = CukeSlicer::Slicer.new.slice("#{@default_file_directory}/#{target}", options)
 end
 
-When(/^test cases are extracted from "([^"]*)" using the following path filters:$/) do |target, filters|
+When(/^test cases are extracted from "([^"]*)" using the following inclusive tag filters:$/) do |target, filters|
   @output ||= {}
-  excluded_filters = []
-  included_filters = []
+  options = {}
 
-  filters.hashes.each do |filter|
-    case filter['filter type']
-      when 'excluded'
-        excluded_filters << process_filter(filter['filter'])
-      when 'included'
-        included_filters << process_filter(filter['filter'])
-      else
-        raise("Unknown filter type #{filter['filter type']}")
-    end
-  end
+  options[:included_tags] = filters.raw.flatten.collect { |filter| process_filter(filter) }
 
+  @output[target] = CukeSlicer::Slicer.new.slice("#{@default_file_directory}/#{target}", options)
+end
 
-  @output[target] = CukeSlicer::Slicer.new.slice("#{@default_file_directory}/#{target}", excluded_paths: excluded_filters, included_paths: included_filters)
+When(/^test cases are extracted from "([^"]*)" using the following inclusive path filters:$/) do |target, filters|
+  @output ||= {}
+  options = {}
+
+  options[:included_paths] = filters.raw.flatten.collect { |filter| process_filter(filter) }
+
+  @output[target] = CukeSlicer::Slicer.new.slice("#{@default_file_directory}/#{target}", options)
+end
+
+When(/^test cases are extracted from "([^"]*)" using the following exclusive path filters:$/) do |target, filters|
+  @output ||= {}
+  options = {}
+
+  options[:excluded_paths] = filters.raw.flatten.collect { |filter| process_filter(filter) }
+
+  @output[target] = CukeSlicer::Slicer.new.slice("#{@default_file_directory}/#{target}", options)
 end
 
 When(/^test cases are extracted from "([^"]*)" using the following custom filter:$/) do |target, filter_block|
@@ -58,11 +77,30 @@ end
 
 When(/^test cases are extracted from "([^"]*)" using "([^"]*)"$/) do |target, included_tag_filters|
   @output ||= {}
+  options = {}
 
-  @output[target] = CukeSlicer::Slicer.new.slice("#{@default_file_directory}/#{target}", included_tags: included_tag_filters)
+  options[:included_tags] = eval("[#{included_tag_filters}]")
+
+  @output[target] = CukeSlicer::Slicer.new.slice("#{@default_file_directory}/#{target}", options)
 end
 
 def process_filter(filter)
   filter.sub!('path/to', @default_file_directory)
   filter =~ /^\/.+\/$/ ? Regexp.new(filter.slice(1..-2)) : filter
+end
+
+When(/^it tries to extract test cases using an unknown filter type$/) do
+  begin
+    @slicer.slice(@default_file_directory, {unknown_filter: 'foo'})
+  rescue ArgumentError => e
+    @error_raised = e
+  end
+end
+
+When(/^it tries to extract test cases using an invalid filter$/) do
+  begin
+    @slicer.slice(@default_file_directory, {included_tags: 7})
+  rescue ArgumentError => e
+    @error_raised = e
+  end
 end
