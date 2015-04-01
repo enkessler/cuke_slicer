@@ -27,9 +27,9 @@ Or install it yourself as:
     test_directory = 'path/to/your_test_directory'
 
     # Choose your slicing filters
-    filters = {excluded_tags: '@tag1 | @tag2',
+    filters = {excluded_tags: ['@tag1','@tag2'],
                included_tags: '@tag3',
-               excluded_paths: ['foo'],
+               excluded_paths: 'foo',
                included_paths: [/test_directory/]}
 
     # Use the slicer to find all tests matching those filters
