@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe 'Slicer, Unit' do
 
-  let!(:clazz) { CukeSlicer::Slicer }
+  let(:clazz) { CukeSlicer::Slicer }
   let(:slicer) { clazz.new }
 
 

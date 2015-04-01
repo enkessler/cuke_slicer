@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe 'Slicer, Integration' do
 
-  let!(:clazz) { CukeSlicer::Slicer }
+  let(:clazz) { CukeSlicer::Slicer }
   let(:slicer) { clazz.new }
   let(:test_file) { "#{@default_file_directory}/a_test.feature" }
 
