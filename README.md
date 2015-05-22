@@ -1,5 +1,18 @@
 # CukeSlicer
 
+<a href="http://badge.fury.io/rb/cuke_slicer"><img src="https://badge.fury.io/rb/cuke_slicer.svg" alt="Gem Version"></a>
+
+<a href='https://gemnasium.com/grange-insurance/cuke_slicer'><img src="https://gemnasium.com/grange-insurance/cuke_slicer.svg" alt="Dependency Status" /></a>
+
+<a href='https://github.com/grange-insurance/cuke_slicer/blob/master/LICENSE.txt'><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Project License" /></a>
+
+<a href="https://travis-ci.org/grange-insurance/cuke_slicer"><img src="https://travis-ci.org/grange-insurance/cuke_slicer.svg" alt="Build Status"></a>
+
+<a href='https://coveralls.io/r/grange-insurance/cuke_slicer'><img src='https://coveralls.io/repos/grange-insurance/cuke_slicer/badge.svg' alt='Coverage Status' /></a>
+
+<a href="https://codeclimate.com/github/grange-insurance/cuke_slicer"><img src="https://codeclimate.com/github/grange-insurance/cuke_slicer/badges/gpa.svg" alt="Code Quality" /></a>
+
+
 The cuke_slicer gem provides an easy and programmatic way to divide a Cucumber test suite into granular test
 cases that can then be dealt with on an individual basis. Often this means handing them off to a distributed
 testing system in order to parallelize test execution.

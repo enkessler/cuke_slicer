@@ -1,6 +1,7 @@
 require "bundler/gem_tasks"
 require 'cucumber/rake/task'
 require 'rspec/core/rake_task'
+require 'coveralls/rake/task'
 
 
 def set_cucumber_options(options)
@@ -42,6 +43,9 @@ namespace 'cuke_slicer' do
     Rake::Task['cuke_slicer:rspec:specs'].invoke(args[:command_options])
     Rake::Task['cuke_slicer:cucumber:tests'].invoke(args[:command_options])
   end
+
+  Coveralls::RakeTask.new
+  task :ci_build => [:clear_coverage, :test_everything, 'coveralls:push']
 
 end
 
