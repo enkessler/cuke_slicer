@@ -17,7 +17,9 @@ module CukeSlicer
     # @param filters [Hash] the filters that will be applied to the sliced test cases
     def slice(target, filters = {}, &block)
       validate_target(target)
-      validate_filters(filters)
+      filter_sets = filters.map {|k,v| FilterSet.new(k,v)}
+      validate_filters(filter_sets)
+      # filter_sets.each(&:validate)
 
 
       begin
@@ -52,13 +54,13 @@ module CukeSlicer
     end
 
     def validate_filters(filter_sets)
-      filter_sets.each do |filter_type, filter_value|
-        raise(ArgumentError, "Unknown filter '#{filter_type}'") unless self.class.known_filters.include?(filter_type)
-        raise(ArgumentError, "Invalid filter '#{filter_value}'. Must be a String, Regexp, or Array thereof. Got #{filter_value.class}") unless filter_value.is_a?(String) or filter_value.is_a?(Regexp) or filter_value.is_a?(Array)
+      filter_sets.each do |filter_set|
+        filter_set.block_unknown
+        filter_set.block_invalid
 
-        if filter_value.is_a?(Array)
-          validate_tag_collection(filter_value) if filter_type.to_s =~ /tag/
-          validate_path_collection(filter_value) if filter_type.to_s =~ /path/
+        if filter_set.filter_value.is_a?(Array)
+          validate_tag_collection(filter_set.filter_value) if filter_set.filter_type.to_s =~ /tag/
+          validate_path_collection(filter_set.filter_value) if filter_set.filter_type.to_s =~ /path/
         end
       end
     end
