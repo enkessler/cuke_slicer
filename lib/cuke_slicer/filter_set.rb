@@ -20,6 +20,7 @@ module CukeSlicer
 
     private
 
+
     def block_unknown
       raise(ArgumentError, "Unknown filter '#{filter_type}'") unless CukeSlicer::Slicer.known_filters.include?(filter_type)
     end
