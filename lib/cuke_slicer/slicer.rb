@@ -18,8 +18,7 @@ module CukeSlicer
     def slice(target, filters = {}, &block)
       validate_target(target)
       filter_sets = filters.map {|k,v| FilterSet.new(k,v)}
-      validate_filters(filter_sets)
-      # filter_sets.each(&:validate)
+      filter_sets.each(&:validate)
 
 
       begin
@@ -29,8 +28,10 @@ module CukeSlicer
       end
 
       if target.is_a?(CukeModeler::Directory)
+        # sliced_tests = DirectoryExtractor.new(target, filters, &block).extract
         sliced_tests = extract_test_cases_from_directory(target, filters, &block)
       else
+        # sliced_tests = FileExtractor.new(target, filters, &block).extract
         sliced_tests = extract_test_cases_from_file(target, filters, &block)
       end
 
@@ -62,27 +63,6 @@ module CukeSlicer
           validate_tag_collection(filter_set.filter_value) if filter_set.filter_type.to_s =~ /tag/
           validate_path_collection(filter_set.filter_value) if filter_set.filter_type.to_s =~ /path/
         end
-      end
-    end
-
-    def validate_tag_collection(filter_collection)
-      filter_collection.each do |filter|
-        raise(ArgumentError, "Filter '#{filter}' must be a String, Regexp, or Array. Got #{filter.class}") unless filter.is_a?(String) or filter.is_a?(Regexp) or filter.is_a?(Array)
-
-        validate_nested_tag_collection(filter) if filter.is_a?(Array)
-      end
-    end
-
-    def validate_nested_tag_collection(filter_collection)
-      filter_collection.each do |filter|
-        raise(ArgumentError, "Tag filters cannot be nested more than one level deep.") if filter.is_a?(Array)
-        raise(ArgumentError, "Filter '#{filter}' must be a String or Regexp. Got #{filter.class}") unless filter.is_a?(String) or filter.is_a?(Regexp)
-      end
-    end
-
-    def validate_path_collection(filter_collection)
-      filter_collection.each do |filter|
-        raise(ArgumentError, "Filter '#{filter}' must be a String or Regexp. Got #{filter.class}") unless filter.is_a?(String) or filter.is_a?(Regexp)
       end
     end
 
