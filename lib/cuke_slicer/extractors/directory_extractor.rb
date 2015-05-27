@@ -25,6 +25,7 @@ module CukeSlicer
             else
               # Non-feature files are ignored
           end
+
         end
       end
     end
