@@ -9,7 +9,7 @@ require "cuke_slicer/helpers/extraction_helpers"
 require "cuke_slicer/helpers/filter_helpers"
 require "cuke_slicer/helpers/matching_helpers"
 
-require "cuke_slicer/filter_set"
+require "cuke_slicer/filters/filter_set"
 
 require "cuke_slicer/collections/tag_collection"
 require "cuke_slicer/collections/nested_tag_collection"
