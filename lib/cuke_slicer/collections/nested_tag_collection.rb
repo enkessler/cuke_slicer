@@ -8,7 +8,7 @@ module CukeSlicer
     def validate
       nested_collection.each do |element|
         raise(ArgumentError, "Tag filters cannot be nested more than one level deep.") if element.is_a?(Array)
-        raise(ArgumentError, "Filter '#{element}' must be a String or Regexp. Got #{element.class}") unless element.is_a?(String) or element.is_a?(Regexp)
+        raise(ArgumentError, "Filter '#{element}' must be a String or Regexp. Got #{element.class}") unless str_regex?(element)
       end
     end
   end
