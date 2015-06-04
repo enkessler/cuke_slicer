@@ -1,5 +1,6 @@
 module CukeSlicer
   module FilterHelpers
+
     def apply_custom_filter(elements, &block)
       if block
         elements.reject! do |element|
@@ -51,5 +52,6 @@ module CukeSlicer
         end
       end
     end
+
   end
 end

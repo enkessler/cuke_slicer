@@ -1,7 +1,13 @@
+require "cuke_slicer/helpers/helpers"
+require "cuke_slicer/collections/tag_collection"
+require "cuke_slicer/collections/path_collection"
+
+
 module CukeSlicer
   class FilterSet
+
     include Helpers
-    attr_accessor :filter_type, :filter_value
+
 
     def initialize filter_type, filter_value
       self.filter_type = filter_type
@@ -29,6 +35,8 @@ module CukeSlicer
     def block_invalid
       raise(ArgumentError, "Invalid filter '#{filter_value}'. Must be a String, Regexp, or Array thereof. Got #{filter_value.class}") unless str_regex_arr?(filter_value)
     end
+
+    attr_accessor :filter_type, :filter_value
 
   end
 end

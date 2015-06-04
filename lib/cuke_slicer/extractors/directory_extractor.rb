@@ -1,12 +1,12 @@
 module CukeSlicer
   class DirectoryExtractor
-    attr_accessor :target, :filters, :block
 
     def initialize(target, filters, &block)
       self.target = target
       self.filters = filters
       self.block = block
     end
+
     def extract
       entries = Dir.entries(target.path)
       entries.delete '.'
@@ -29,5 +29,11 @@ module CukeSlicer
         end
       end
     end
+
+
+    private
+
+    attr_accessor :target, :filters, :block
+
   end
 end

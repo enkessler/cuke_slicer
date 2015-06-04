@@ -1,3 +1,8 @@
+require "cuke_slicer/extractors/directory_extractor"
+require "cuke_slicer/extractors/file_extractor"
+require "cuke_slicer/filters/filter_set"
+
+
 module CukeSlicer
 
   # The object responsible for slicing up a Cucumber test suite into discrete test cases.
@@ -17,9 +22,7 @@ module CukeSlicer
     # @param filters [Hash] the filters that will be applied to the sliced test cases
     def slice(target, filters = {}, &block)
       validate_target(target)
-      filter_sets = filters.map {|k,v| FilterSet.new(k,v)}
-      filter_sets.each(&:validate)
-
+      validate_filters(filters)
 
       begin
         target = File.directory?(target) ? CukeModeler::Directory.new(target) : CukeModeler::FeatureFile.new(target)
@@ -50,6 +53,11 @@ module CukeSlicer
 
     def validate_target(target)
       raise(ArgumentError, "File or directory '#{target}' does not exist") unless File.exists?(target.to_s)
+    end
+
+    def validate_filters(filters)
+      filter_sets = filters.map { |filter_type, value| FilterSet.new(filter_type, value) }
+      filter_sets.each(&:validate)
     end
 
   end

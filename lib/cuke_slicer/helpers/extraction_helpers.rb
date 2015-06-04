@@ -1,5 +1,6 @@
 module CukeSlicer
   module ExtractionHelpers
+
     def extract_runnable_block_elements(things, filters)
       Array.new.tap do |elements|
         things.each do |thing|
@@ -29,5 +30,6 @@ module CukeSlicer
         end
       end
     end
+
   end
 end

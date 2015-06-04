@@ -1,5 +1,6 @@
 module CukeSlicer
   module Helpers
+
     def str_regex?(parameter)
       parameter.is_a?(String) or parameter.is_a?(Regexp)
     end
@@ -15,5 +16,6 @@ module CukeSlicer
     def is_path?(parameter)
       parameter.to_s =~ /path/
     end
+
   end
 end

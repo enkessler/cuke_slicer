@@ -1,10 +1,15 @@
+require "cuke_slicer/helpers/extraction_helpers"
+require "cuke_slicer/helpers/filter_helpers"
+require "cuke_slicer/helpers/matching_helpers"
+
+
 module CukeSlicer
   class FileExtractor
+
     include ExtractionHelpers
     include FilterHelpers
     include MatchingHelpers
 
-    attr_accessor :target, :filters, :block
 
     def initialize(target, filters, &block)
       self.target = target
@@ -27,6 +32,11 @@ module CukeSlicer
         end
       end
     end
+
+
+    private
+
+    attr_accessor :target, :filters, :block
 
   end
 end

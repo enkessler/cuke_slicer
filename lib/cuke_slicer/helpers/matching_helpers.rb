@@ -1,5 +1,6 @@
 module CukeSlicer
   module MatchingHelpers
+
     def matching_tag?(element, filters)
       filters.each do |filter|
         if filter.is_a?(Array)
@@ -41,5 +42,6 @@ module CukeSlicer
         end
       end
     end
+
   end
 end
