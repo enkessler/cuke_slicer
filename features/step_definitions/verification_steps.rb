@@ -45,3 +45,14 @@ Then(/^an error indicating that the filter is invalid will be triggered$/) do
   expect(@error_raised).to_not be_nil
   expect(@error_raised.message).to match(/invalid filter/i)
 end
+
+Then(/^the test cases are provided as objects$/) do
+  @output.values.flatten.each do |output|
+    expect(output).to be_a(CukeModeler::Scenario).or be_a(CukeModeler::Row)
+  end
+end
+
+Then(/^an error indicating that the output type is invalid will be triggered$/) do
+  expect(@error_raised).to_not be_nil
+  expect(@error_raised.message).to match(/Invalid Output Format/i)
+end

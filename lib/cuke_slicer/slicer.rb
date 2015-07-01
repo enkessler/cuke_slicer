@@ -18,11 +18,16 @@ module CukeSlicer
     # exposes the underlying modeling objects and knowledge of how they work is then required to make good use of the
     # filter.
     #
+    # Finally, the test cases can be provided as a collection of file:line strings or as a collection of the object
+    # types used to represent test cases by the underlying modeling library.
+    #
     # @param target [String] the location that will be sliced up
     # @param filters [Hash] the filters that will be applied to the sliced test cases
-    def slice(target, filters = {}, &block)
+    # @param format [Symbol] the type of output: :file_line or :test_object
+    def slice(target, filters = {}, format, &block)
       validate_target(target)
       validate_filters(filters)
+      validate_format(format)
 
       begin
         target = File.directory?(target) ? CukeModeler::Directory.new(target) : CukeModeler::FeatureFile.new(target)
@@ -31,9 +36,9 @@ module CukeSlicer
       end
 
       if target.is_a?(CukeModeler::Directory)
-        sliced_tests = DirectoryExtractor.new(target, filters, &block).extract
+        sliced_tests = DirectoryExtractor.new(target, filters, format, &block).extract
       else
-        sliced_tests = FileExtractor.new(target, filters, &block).extract
+        sliced_tests = FileExtractor.new(target, filters, format, &block).extract
       end
 
       sliced_tests
@@ -58,6 +63,10 @@ module CukeSlicer
     def validate_filters(filters)
       filter_sets = filters.map { |filter_type, value| FilterSet.new(filter_type, value) }
       filter_sets.each(&:validate)
+    end
+
+    def validate_format(format)
+      raise(ArgumentError, "Invalid Output Format: #{format}") unless [:test_object, :file_line].include?(format)
     end
 
   end

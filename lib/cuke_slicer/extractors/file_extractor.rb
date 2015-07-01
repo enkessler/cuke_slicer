@@ -11,9 +11,10 @@ module CukeSlicer
     include MatchingHelpers
 
 
-    def initialize(target, filters, &block)
+    def initialize(target, filters, format, &block)
       self.target = target
       self.filters = filters
+      self.format = format
       self.block = block
     end
 
@@ -27,7 +28,12 @@ module CukeSlicer
           apply_custom_filter(runnable_elements, &block)
 
           runnable_elements.each do |element|
-            test_cases << "#{element.get_ancestor(:feature_file).path}:#{element.source_line}"
+            case
+              when format == :file_line
+                test_cases << "#{element.get_ancestor(:feature_file).path}:#{element.source_line}"
+              when format == :test_object
+                test_cases << element
+            end
           end
         end
       end
@@ -36,7 +42,7 @@ module CukeSlicer
 
     private
 
-    attr_accessor :target, :filters, :block
+    attr_accessor :target, :filters, :format, :block
 
   end
 end

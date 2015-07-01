@@ -1,6 +1,6 @@
 Feature: Test case extraction
 
-  Test cases can be extracted from a source file or directory as a collection of 'file:line' items that
+  Test cases can be extracted from a source file or directory as a collection of 'file:line' items or objects that
   can then be conveniently arranged for consumption by some other tool (e.g. Cucumber).
 
 
@@ -76,3 +76,9 @@ Feature: Test case extraction
     And the directory "test_directory/empty_directory"
     When test cases are extracted from "test_directory"
     Then no test cases are found
+
+  Scenario: Extracting objects
+    Given a test suite to extract from
+    And the test cases are to be extracted as objects
+    When test cases are extracted from it
+    Then the test cases are provided as objects

@@ -1,9 +1,10 @@
 module CukeSlicer
   class DirectoryExtractor
 
-    def initialize(target, filters, &block)
+    def initialize(target, filters, format, &block)
       self.target = target
       self.filters = filters
+      self.format = format
       self.block = block
     end
 
@@ -21,7 +22,7 @@ module CukeSlicer
               self.target = CukeModeler::Directory.new(entry)
               test_cases.concat(extract)
             when entry =~ /\.feature$/
-              test_cases.concat(FileExtractor.new(CukeModeler::FeatureFile.new(entry), filters, &block).extract)
+              test_cases.concat(FileExtractor.new(CukeModeler::FeatureFile.new(entry), filters, format, &block).extract)
             else
               # Non-feature files are ignored
           end
@@ -33,7 +34,7 @@ module CukeSlicer
 
     private
 
-    attr_accessor :target, :filters, :block
+    attr_accessor :target, :filters, :format, :block
 
   end
 end

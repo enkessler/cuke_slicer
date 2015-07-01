@@ -54,3 +54,9 @@ Feature: Validation
     When test cases are extracted from "test_directory"
     Then the following test cases are found
       | path/to/test_directory/a_test.feature:3 |
+
+  Scenario: Invalid output type are not allowed
+    Given a test suite to extract from
+    And an invalid output option
+    When test cases are extracted from it
+    Then an error indicating that the output type is invalid will be triggered

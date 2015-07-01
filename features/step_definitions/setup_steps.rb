@@ -77,3 +77,27 @@ end
 Given(/^a slicer$/) do
   @slicer = CukeSlicer::Slicer.new
 end
+
+And(/^the test cases are to be extracted as objects$/) do
+  @output_type = :test_object
+end
+
+And(/^an invalid output option$/) do
+  @output_type = :invalid_option
+end
+
+Given(/^a test suite to extract from$/) do
+  @test_directory ||= @default_file_directory
+
+  @targets ||= []
+  @targets << @default_feature_file_name
+
+
+  test_suite = "Feature: Test feature
+
+                   @tag
+                   Scenario: Test scenario
+                     * some step"
+
+  File.write("#{@test_directory}/#{@default_feature_file_name}", test_suite)
+end

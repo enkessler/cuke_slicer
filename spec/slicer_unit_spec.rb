@@ -15,8 +15,8 @@ describe 'Slicer, Unit' do
     expect(slicer).to respond_to(:slice)
   end
 
-  it 'needs something to slice up and can optionally have applicable filters' do
-    expect(slicer.method(:slice).arity).to eq(-2)
+  it 'needs something to slice up, an output format, and can optionally have applicable filters' do
+    expect(slicer.method(:slice).arity).to eq(-3)
   end
 
   it 'knows what slice filters are available for use' do
