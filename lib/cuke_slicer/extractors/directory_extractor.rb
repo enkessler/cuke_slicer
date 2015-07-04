@@ -19,8 +19,12 @@ module CukeSlicer
 
           case
             when File.directory?(entry)
+              current_target = target
+
               self.target = CukeModeler::Directory.new(entry)
               test_cases.concat(extract)
+
+              self.target = current_target
             when entry =~ /\.feature$/
               test_cases.concat(FileExtractor.new(CukeModeler::FeatureFile.new(entry), filters, format, &block).extract)
             else

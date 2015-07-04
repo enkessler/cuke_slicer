@@ -6,15 +6,14 @@ describe 'Slicer, Integration' do
   let(:clazz) { CukeSlicer::Slicer }
   let(:slicer) { clazz.new }
   let(:test_file) { "#{@default_file_directory}/a_test.feature" }
+  let(:test_file_text) { "Feature: Test feature
+
+                          @tag
+                          Scenario: Test scenario
+                            * some step" }
 
   before(:each) do
-    file_text = "Feature: Test feature
-
-                   @tag
-                   Scenario: Test scenario
-                     * some step"
-
-    File.open(test_file, 'w') { |file| file.write(file_text) }
+    File.write(test_file, test_file_text)
   end
 
 
@@ -184,6 +183,58 @@ describe 'Slicer, Integration' do
         expect { slicer.slice(@default_file_directory, options, :file_line) }.to raise_error(ArgumentError, /unknown filter.*#{unknown_filter_type}/i)
       end
 
+    end
+
+  end
+
+  describe "bugs that we don't want to happen again" do
+
+
+    # As a nested directory structure was being traversed for slicing, the extraction algorithm was mangling the
+    # current file path such that it would sometimes attempt to search non-existent locations. Sometimes this
+    # resulted in an exception and sometimes this resulted in files getting silently skipped over.
+
+
+    it 'can handle a realistically nested directory structure' do
+      root_directory = @default_file_directory
+
+      # Outer 'before' hook already makes a root level feature file
+      expected_tests = ["#{test_file}:4"]
+
+      # Adding a nested directory
+      nested_directory_1 = "#{root_directory}/nested_directory_1"
+      FileUtils.mkpath(nested_directory_1)
+      test_file = "#{nested_directory_1}/nested_file_1.feature"
+      File.write(test_file, test_file_text)
+      expected_tests << "#{test_file}:4"
+      test_file = "#{nested_directory_1}/nested_file_2.feature"
+      File.write(test_file, test_file_text)
+      expected_tests << "#{test_file}:4"
+
+      # And another one
+      nested_directory_2 = "#{root_directory}/nested_directory_2"
+      FileUtils.mkpath(nested_directory_2)
+      test_file = "#{nested_directory_2}/nested_file_1.feature"
+      File.write(test_file, test_file_text)
+      expected_tests << "#{test_file}:4"
+      test_file = "#{nested_directory_2}/nested_file_2.feature"
+      File.write(test_file, test_file_text)
+      expected_tests << "#{test_file}:4"
+
+      # And one of them has another directory inside of it
+      doubly_nested_directory = "#{nested_directory_1}/doubly_nested_directory"
+      FileUtils.mkpath(doubly_nested_directory)
+      test_file = "#{doubly_nested_directory}/doubly_nested_file_1.feature"
+      File.write(test_file, test_file_text)
+      expected_tests << "#{test_file}:4"
+      test_file = "#{doubly_nested_directory}/doubly_nested_file_2.feature"
+      File.write(test_file, test_file_text)
+      expected_tests << "#{test_file}:4"
+
+
+      # No problems, no missed files
+      expect { @slice_output = slicer.slice(root_directory, :file_line) }.to_not raise_error
+      expect(@slice_output).to match_array(expected_tests)
     end
 
   end
