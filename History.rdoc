@@ -1,0 +1,9 @@
+=== Version 2.0.0 / 2015-07-04
+
+* When slicing a directory, the test cases returned can now be provided as model objects in addition to the
+  previous 'file_path:line_number' format.
+
+
+=== Version 1.0.0 / 2015-04-01
+
+* Initial release
