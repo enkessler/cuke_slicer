@@ -1,44 +1,17 @@
 module CukeSlicer
   class DirectoryExtractor
 
-    def initialize(target, filters, format, &block)
-      self.target = target
-      self.filters = filters
-      self.format = format
-      self.block = block
-    end
-
-    def extract
-      entries = Dir.entries(target.path)
-      entries.delete '.'
-      entries.delete '..'
-
+    def extract(target, filters, format, &block)
       Array.new.tap do |test_cases|
-        entries.each do |entry|
-          entry = "#{target.path}/#{entry}"
+        target.feature_files.each do |feature_file|
+          test_cases.concat(FileExtractor.new(feature_file, filters, format, &block).extract)
+        end
 
-          case
-            when File.directory?(entry)
-              current_target = target
-
-              self.target = CukeModeler::Directory.new(entry)
-              test_cases.concat(extract)
-
-              self.target = current_target
-            when entry =~ /\.feature$/
-              test_cases.concat(FileExtractor.new(CukeModeler::FeatureFile.new(entry), filters, format, &block).extract)
-            else
-              # Non-feature files are ignored
-          end
-
+        target.directories.each do |directory|
+          test_cases.concat(extract(directory, filters, format, &block))
         end
       end
     end
-
-
-    private
-
-    attr_accessor :target, :filters, :format, :block
 
   end
 end
