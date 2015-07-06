@@ -38,7 +38,7 @@ module CukeSlicer
       if target.is_a?(CukeModeler::Directory)
         sliced_tests = DirectoryExtractor.new.extract(target, filters, format, &block)
       else
-        sliced_tests = FileExtractor.new(target, filters, format, &block).extract
+        sliced_tests = FileExtractor.new.extract(target, filters, format, &block)
       end
 
       sliced_tests

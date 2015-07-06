@@ -4,7 +4,7 @@ module CukeSlicer
     def extract(target, filters, format, &block)
       Array.new.tap do |test_cases|
         target.feature_files.each do |feature_file|
-          test_cases.concat(FileExtractor.new(feature_file, filters, format, &block).extract)
+          test_cases.concat(FileExtractor.new.extract(feature_file, filters, format, &block))
         end
 
         target.directories.each do |directory|

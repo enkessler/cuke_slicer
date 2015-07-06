@@ -11,14 +11,7 @@ module CukeSlicer
     include MatchingHelpers
 
 
-    def initialize(target, filters, format, &block)
-      self.target = target
-      self.filters = filters
-      self.format = format
-      self.block = block
-    end
-
-    def extract
+    def extract(target, filters, format, &block)
       Array.new.tap do |test_cases|
         unless target.feature.nil?
           tests = target.feature.tests
@@ -38,11 +31,6 @@ module CukeSlicer
         end
       end
     end
-
-
-    private
-
-    attr_accessor :target, :filters, :format, :block
 
   end
 end
