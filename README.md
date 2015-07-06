@@ -46,7 +46,7 @@ Or install it yourself as:
                included_paths: [/test_directory/]}
 
     # Use the slicer to find all tests matching those filters
-    found_tests = CukeSlicer::Slicer.new.slice(test_directory, filters)
+    found_tests = CukeSlicer::Slicer.new.slice(test_directory, filters, :file_line)
 
 
     # Arrange the sliced pieces to suit your particular needs. In this case, we will dump them
