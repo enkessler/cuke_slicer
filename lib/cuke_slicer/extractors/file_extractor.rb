@@ -1,14 +1,12 @@
-require "cuke_slicer/helpers/extraction_helpers"
-require "cuke_slicer/helpers/filter_helpers"
 require "cuke_slicer/helpers/matching_helpers"
+require "cuke_slicer/helpers/filter_helpers"
+require "cuke_slicer/helpers/extraction_helpers"
 
 
 module CukeSlicer
   class FileExtractor
 
     include ExtractionHelpers
-    include FilterHelpers
-    include MatchingHelpers
 
 
     def extract(target, filters, format, &block)
@@ -16,9 +14,7 @@ module CukeSlicer
         unless target.feature.nil?
           tests = target.feature.tests
 
-          runnable_elements = extract_runnable_elements(extract_runnable_block_elements(tests, filters))
-
-          apply_custom_filter(runnable_elements, &block)
+          runnable_elements = extract_runnable_elements(extract_runnable_block_elements(tests, filters, &block))
 
           runnable_elements.each do |element|
             case

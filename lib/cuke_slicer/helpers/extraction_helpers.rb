@@ -1,7 +1,10 @@
 module CukeSlicer
   module ExtractionHelpers
 
-    def extract_runnable_block_elements(things, filters)
+    include FilterHelpers
+
+
+    def extract_runnable_block_elements(things, filters, &block)
       Array.new.tap do |elements|
         things.each do |thing|
           if thing.is_a?(CukeModeler::Outline)
@@ -15,6 +18,8 @@ module CukeSlicer
         filter_included_paths(elements, filters[:included_paths])
         filter_excluded_tags(elements, filters[:excluded_tags])
         filter_included_tags(elements, filters[:included_tags])
+
+        apply_custom_filter(elements, &block)
       end
     end
 

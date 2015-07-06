@@ -1,6 +1,9 @@
 module CukeSlicer
   module FilterHelpers
 
+    include MatchingHelpers
+
+
     def apply_custom_filter(elements, &block)
       if block
         elements.reject! do |element|
