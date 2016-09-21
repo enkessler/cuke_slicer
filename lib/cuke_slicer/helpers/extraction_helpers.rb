@@ -28,7 +28,7 @@ module CukeSlicer
         things.each do |thing|
           if thing.is_a?(CukeModeler::Example)
             # Slicing in order to remove the parameter row element
-            elements.concat(thing.row_elements.slice(1, thing.row_elements.count - 1))
+            elements.concat(thing.rows.slice(1, thing.rows.count - 1))
           else
             elements << thing
           end
