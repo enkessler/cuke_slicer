@@ -4,4 +4,8 @@ rvm:
   - 2.0.0
   - 2.1.2
 
+gemfile:
+  - gemfiles/cuke_modeler0.gemfile
+  - gemfiles/cuke_modeler1.gemfile
+
 script: bundle exec rake cuke_slicer:ci_build
