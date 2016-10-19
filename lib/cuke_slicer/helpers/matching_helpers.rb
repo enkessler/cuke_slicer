@@ -26,10 +26,13 @@ module CukeSlicer
     end
 
     def filter_match(element, filter)
+      tag_values = element.all_tags
+      tag_values = tag_values.collect { |tag| tag.name } if Gem.loaded_specs['cuke_modeler'].version.version[/^1/]
+
       if filter.is_a?(Regexp)
-        element.all_tags.any? { |tag| tag =~ filter }
+        tag_values.any? { |tag| tag =~ filter }
       else
-        element.all_tags.include?(filter)
+        tag_values.include?(filter)
       end
     end
 

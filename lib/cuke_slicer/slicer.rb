@@ -31,8 +31,13 @@ module CukeSlicer
 
       begin
         target = File.directory?(target) ? CukeModeler::Directory.new(target) : CukeModeler::FeatureFile.new(target)
-      rescue Gherkin::Lexer::LexingError
-        raise(ArgumentError, "A syntax or lexing problem was encountered while trying to parse #{target}")
+      rescue => e
+        if e.message =~ /lexing|parsing/i
+          raise(ArgumentError, "A syntax or lexing problem was encountered while trying to parse #{target}")
+        else
+          raise e
+        end
+
       end
 
       if target.is_a?(CukeModeler::Directory)
