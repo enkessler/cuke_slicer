@@ -1,3 +1,7 @@
+=== Version 2.0.1 / 2016-11-08
+
+* Works with both 0.x and 1.x versions of the 'cuke_modeler' gem.
+
 === Version 2.0.0 / 2015-07-08
 
 * When slicing a directory, the test cases returned can now be provided as model objects in addition to the
