@@ -25,12 +25,12 @@ module CukeSlicer
     end
 
     def filter_included_tags(elements, filters)
-      if filters
-        filters = [filters] unless filters.is_a?(Array)
+      if filters && filters != []
+          filters = [filters] unless filters.is_a?(Array)
 
-        elements.keep_if do |element|
-          matching_tag?(element, filters)
-        end
+          elements.keep_if do |element|
+            matching_tag?(element, filters)
+          end
       end
     end
 
