@@ -10,14 +10,6 @@ describe 'Slicer, Integration' do
 
                           @tag
                           Scenario: Test scenario
-                            * some step
-
-                          @wip
-                          Scenario: Test scenario2
-                            * some step
-
-                          @slow @tag
-                          Scenario: Test scenario3
                             * some step" }
 
   before(:each) do
@@ -240,12 +232,8 @@ describe 'Slicer, Integration' do
       expected_tests << "#{test_file}:4"
 
 
-      # Filters
-      filters = {included_tags: ['@tag'],
-                 excluded_tags: ['@wip', '@slow']}
-
       # No problems, no missed files
-      expect { @slice_output = slicer.slice(root_directory, filters, :file_line) }.to_not raise_error
+      expect { @slice_output = slicer.slice(root_directory, :file_line) }.to_not raise_error
       expect(@slice_output).to match_array(expected_tests)
     end
 
