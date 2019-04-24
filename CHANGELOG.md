@@ -6,7 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-Nothing yet...
+### Added
+
+ - Add dependency version limits to Ruby, which was previously unbound. Previously unofficially supported Ruby versions (1.9.3 - 2.x) are now officially supported.
 
 
 ## [2.0.2] - 2016-11-19
