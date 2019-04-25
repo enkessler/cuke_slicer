@@ -2,7 +2,9 @@ source 'https://rubygems.org'
 
 gemspec :path => "../"
 
-gem 'cuke_modeler', '~> 0.0'
+# Bundle is not using the latest in the CukeModeler 0.x series for some reason, so being explicit here
+gem 'cuke_modeler', '0.4.1'
+# gem 'cuke_modeler', '~> 0.0'     # This really should be sufficient...
 
 
 if RUBY_VERSION =~ /^1\./
