@@ -60,11 +60,11 @@ describe 'Slicer, Integration' do
       expect { slicer.slice(@default_file_directory, :file_line) }.to_not raise_error
     end
 
-    # it 'can slice an empty feature file' do
-    #   File.open(test_file, 'w') { |file| file.write('') }
-    #
-    #   expect { slicer.slice(test_file, :file_line) }.to_not raise_error
-    # end
+    it 'can slice an empty feature file' do
+      File.open(test_file, 'w') { |file| file.write('') }
+
+      expect { slicer.slice(test_file, :file_line) }.to_not raise_error
+    end
 
     it 'can slice a feature that has no tests' do
       File.open(test_file, 'w') { |file| file.write('Feature: Empty feature') }
