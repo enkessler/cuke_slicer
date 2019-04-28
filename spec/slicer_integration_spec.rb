@@ -92,6 +92,43 @@ describe 'Slicer, Integration' do
         expect { slicer.slice(test_file, :file_line) }.to raise_error(ArgumentError, /syntax.*lexing problem.*#{test_file}/i)
       end
 
+      it 'does not swallow unexpected exceptions while slicing' do
+        begin
+          $old_method = CukeModeler::Parsing.method(:parse_text)
+
+          # Custom error type in order to ensure that we are throwing the correct thing
+          module CukeSlicer
+            class TestError < StandardError
+            end
+          end
+
+          # Monkey patch the parsing method to throw the error that we need for testing
+          module CukeModeler
+            module Parsing
+              class << self
+                def parse_text(*args)
+                  raise(CukeSlicer::TestError, 'something went wrong')
+                end
+              end
+            end
+          end
+
+
+          File.write(test_file, 'junk text')
+
+          expect { slicer.slice(test_file, :file_line) }.to raise_error(CukeSlicer::TestError, 'something went wrong')
+        ensure
+          # Making sure that our changes don't escape a test and ruin the rest of the suite
+          module CukeModeler
+            module Parsing
+              class << self
+                define_method(:parse_text, $old_method)
+              end
+            end
+          end
+        end
+      end
+
     end
 
   end
