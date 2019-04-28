@@ -1,7 +1,7 @@
 Basic stuff:
-[![Gem Version](https://badge.fury.io/rb/cql.svg)](https://rubygems.org/gems/cuke_slicer)
+[![Gem Version](https://badge.fury.io/rb/cuke_slicer.svg)](https://rubygems.org/gems/cuke_slicer)
 [![Project License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/mit-license.php)
-[![Downloads](https://img.shields.io/gem/dt/cql.svg)](https://rubygems.org/gems/cuke_slicer)
+[![Downloads](https://img.shields.io/gem/dt/cuke_slicer.svg)](https://rubygems.org/gems/cuke_slicer)
 
 User stuff:
 [![Yard Docs](http://img.shields.io/badge/Documentation-API-blue.svg)](https://www.rubydoc.info/gems/cuke_slicer)
