@@ -33,6 +33,18 @@ namespace 'cuke_slicer' do
     end
   end
 
+  desc 'Check documentation with RDoc'
+  task :check_for_outdated_dependencies do
+    output = `bundle outdated`
+    puts output
+
+    if output =~ /requested/
+      raise Rainbow('Some dependencies are out of date!').red
+    else
+      puts Rainbow('All direct dependencies up to date!').green
+    end
+  end
+
   desc 'Run all of the tests'
   task :test_everything => [:clear_coverage] do
     rspec_args = '--tag ~@wip --pattern "spec/**/*_spec.rb" --force-color'
