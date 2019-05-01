@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+Nothing yet...
+
+
+## [2.0.3] - 2019-05-01
+
 ### Added
 
  - Add dependency version limits to Ruby, which was previously unbound. Previously unofficially supported Ruby versions (1.9.3 - 2.x) are now officially supported.
@@ -43,7 +48,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
  - Initial release
 
-[Unreleased]: https://github.com/grange-insurance/cuke_slicer/compare/v2.0.2...HEAD
+[Unreleased]: https://github.com/grange-insurance/cuke_slicer/compare/v2.0.3...HEAD
+[2.0.3]: https://github.com/grange-insurance/cuke_slicer/compare/v2.0.2...v2.0.3
 [2.0.2]: https://github.com/grange-insurance/cuke_slicer/compare/v2.0.1...v2.0.2
 [2.0.1]: https://github.com/grange-insurance/cuke_slicer/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/grange-insurance/cuke_slicer/compare/v1.0.0...v2.0.0
