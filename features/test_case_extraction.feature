@@ -29,16 +29,16 @@ Feature: Test case extraction
       | path/to/a_test.feature:11 |
       | path/to/a_test.feature:14 |
 
-#  Scenario: Extraction from 'empty' files
-#    Given the following feature file "empty.feature":
-#      """
-#      Feature: Nothing here yet
-#      """
-#    And the following feature file "really_empty.feature":
-#      """
-#      """
-#    When test cases are extracted from them
-#    Then no test cases are found
+  Scenario: Extraction from 'empty' files
+    Given the following feature file "empty.feature":
+      """
+      Feature: Nothing here yet
+      """
+    And the following feature file "really_empty.feature":
+      """
+      """
+    When test cases are extracted from them
+    Then no test cases are found
 
   Scenario: Extraction from a directory
     Given the directory "test_directory"

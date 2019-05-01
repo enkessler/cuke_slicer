@@ -1,26 +1,83 @@
-require "bundler/gem_tasks"
-require 'coveralls/rake/task'
+require 'bundler/gem_tasks'
+require 'rake'
 require 'racatt'
+require 'coveralls/rake/task'
+require 'rainbow'
+
+
+Rainbow.enabled = true
+
+namespace 'racatt' do
+  Racatt.create_tasks
+end
 
 
 namespace 'cuke_slicer' do
 
+  desc 'Removes the current code coverage data'
   task :clear_coverage do
-    puts 'Clearing old code coverage results...'
+    code_coverage_directory = "#{File.dirname(__FILE__)}/coverage"
 
-    # Remove previous coverage results so that they don't get merged in the new results
-    code_coverage_directory = File.join(File.dirname(__FILE__), 'coverage')
-    FileUtils.remove_dir(code_coverage_directory, true) if File.exists?(code_coverage_directory)
+    FileUtils.remove_dir(code_coverage_directory, true)
   end
 
-  Racatt.create_tasks
+  desc 'Check documentation with RDoc'
+  task :check_documentation do
+    output = `rdoc lib -C`
+    puts output
 
-  # Redefining the task from 'racatt' in order to clear the code coverage results
-  task :test_everything, [:command_options] => :clear_coverage
+    if output =~ /100.00% documented/
+      puts Rainbow('All code documented').green
+    else
+      raise Rainbow('Parts of the gem are undocumented').red
+    end
+  end
 
-  # The task that CI will use
+  desc 'Check documentation with RDoc'
+  task :check_for_outdated_dependencies do
+    output = `bundle outdated`
+    puts output
+
+    if output =~ /requested/
+      raise Rainbow('Some dependencies are out of date!').red
+    else
+      puts Rainbow('All direct dependencies up to date!').green
+    end
+  end
+
+  desc 'Run all of the tests'
+  task :test_everything => [:clear_coverage] do
+    rspec_args = '--tag ~@wip --pattern "spec/**/*_spec.rb" --force-color'
+
+    cucumber_version = Gem.loaded_specs['cucumber'].version.version
+
+    if cucumber_version =~ /^[123]\./
+      cucumber_args = 'features -f progress -t ~@wip --color'
+    else
+      cucumber_args = "features -f progress -t 'not @wip' --color"
+    end
+
+    Rake::Task['racatt:test_everything'].invoke(rspec_args, cucumber_args)
+  end
+
+  # creates coveralls:push task
   Coveralls::RakeTask.new
-  task :ci_build => [:clear_coverage, :test_everything, 'coveralls:push']
+
+  desc 'The task that CI will run. Do not run locally.'
+  task :ci_build => ['cuke_slicer:test_everything', 'coveralls:push']
+
+  desc 'Check that things look good before trying to release'
+  task :prerelease_check do
+    begin
+      Rake::Task['cuke_slicer:test_everything'].invoke
+      Rake::Task['cuke_slicer:check_documentation'].invoke
+    rescue => e
+      puts Rainbow("Something isn't right!").red
+      raise e
+    end
+
+    puts Rainbow('All is well. :)').green
+  end
 
 end
 

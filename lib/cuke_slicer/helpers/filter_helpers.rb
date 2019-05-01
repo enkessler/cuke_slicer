@@ -1,3 +1,5 @@
+# Internal helper module that is not part of the public API. Subject to change at any time.
+# :nodoc: all
 module CukeSlicer
   module FilterHelpers
 
