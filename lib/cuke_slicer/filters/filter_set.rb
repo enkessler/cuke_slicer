@@ -3,6 +3,8 @@ require "cuke_slicer/collections/tag_collection"
 require "cuke_slicer/collections/path_collection"
 
 
+# Internal helper module that is not part of the public API. Subject to change at any time.
+# :nodoc: all
 module CukeSlicer
   class FilterSet
 

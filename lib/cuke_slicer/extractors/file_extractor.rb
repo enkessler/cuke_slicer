@@ -3,6 +3,8 @@ require "cuke_slicer/helpers/filter_helpers"
 require "cuke_slicer/helpers/extraction_helpers"
 
 
+# Internal helper module that is not part of the public API. Subject to change at any time.
+# :nodoc: all
 module CukeSlicer
   class FileExtractor
 
