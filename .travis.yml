@@ -21,6 +21,9 @@ matrix:
     # Travis does not provide 1.9.3 on OSX
     - rvm: 1.9.3
       os: osx
+    # Ruby 2.3.x for OSX is currently broken on TravisCI and is no longer a supported Ruby version, anyway.
+    - rvm: 2.3.8
+      os: osx
 
 
 script: bundle exec rake cuke_slicer:ci_build
