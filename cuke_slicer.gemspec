@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '>= 1.9.3', '< 3.0'
 
-  spec.add_runtime_dependency "cuke_modeler", "< 2.0"
+  spec.add_runtime_dependency "cuke_modeler", "< 3.0"
 
   spec.add_development_dependency 'bundler', '< 3.0'
   spec.add_development_dependency 'rake', '< 13.0.0'

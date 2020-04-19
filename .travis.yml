@@ -14,6 +14,7 @@ rvm:
 gemfile:
   - gemfiles/cuke_modeler0.gemfile
   - gemfiles/cuke_modeler1.gemfile
+  - gemfiles/cuke_modeler2.gemfile
 
 matrix:
   exclude:
