@@ -1,3 +1,5 @@
+# Internal helper module that is not part of the public API. Subject to change at any time.
+# :nodoc: all
 module CukeSlicer
   module MatchingHelpers
 
@@ -27,7 +29,7 @@ module CukeSlicer
 
     def filter_match(element, filter)
       tag_values = element.all_tags
-      tag_values = tag_values.collect { |tag| tag.name } if Gem.loaded_specs['cuke_modeler'].version.version[/^1/]
+      tag_values = tag_values.collect { |tag| tag.name } if Gem.loaded_specs['cuke_modeler'].version.version[/^[12]/]
 
       if filter.is_a?(Regexp)
         tag_values.any? { |tag| tag =~ filter }
