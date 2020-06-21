@@ -14,12 +14,20 @@ rvm:
 gemfile:
   - gemfiles/cuke_modeler0.gemfile
   - gemfiles/cuke_modeler1.gemfile
+  - gemfiles/cuke_modeler2.gemfile
+  - gemfiles/cuke_modeler3.gemfile
 
 matrix:
   exclude:
     # Travis does not provide 1.9.3 on OSX
     - rvm: 1.9.3
       os: osx
+    # Ruby 2.3.x for OSX is currently broken on TravisCI and is no longer a supported Ruby version, anyway.
+    - rvm: 2.3.8
+      os: osx
+    # cuke_modeler 3.x has a minimum Ruby version of 2.3
+    - rvm: 1.9.3
+      gemfile: gemfiles/cuke_modeler3.gemfile
 
 
 script: bundle exec rake cuke_slicer:ci_build

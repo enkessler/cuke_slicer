@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gemspec :path => "../"
 
-gem 'cuke_modeler', '~> 1.0'
+gem 'cuke_modeler', '~> 2.0'
 
 
 if RUBY_VERSION =~ /^1\./
@@ -11,5 +11,5 @@ if RUBY_VERSION =~ /^1\./
   gem 'tins', '< 1.7' # The 'tins' gem requires Ruby 2.x on/after this version
   gem 'term-ansicolor', '< 1.4' # The 'term-ansicolor' gem requires Ruby 2.x on/after this version
 else
-  gem 'cucumber', '< 4.0.0' # Cucumber 4.x switches to needing the `cucumber-gherkin` gem, which is incompatible with `cuke_modeler` 1.x
+  gem 'cucumber', '< 4.0.0' # Cucumber 4.x switches to needing the `cucumber-gherkin` gem, which is incompatible with `cuke_modeler` 2.x
 end
