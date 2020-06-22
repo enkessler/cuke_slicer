@@ -1,4 +1,9 @@
-source 'https://rubygems.org'
+# Older Rubies on Windows cannot securely connect to RubyGems anymore (https://github.com/rubygems/rubygems/issues/2330)
+if (RbConfig::CONFIG['host_os'] =~ /mswin|msys|mingw32/) && (RUBY_VERSION =~ /^1\./)
+  source 'http://rubygems.org'
+else
+  source 'https://rubygems.org'
+end
 
 gemspec :path => "../"
 
