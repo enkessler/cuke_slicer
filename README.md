@@ -7,9 +7,9 @@ User stuff:
 [![Yard Docs](http://img.shields.io/badge/Documentation-API-blue.svg)](https://www.rubydoc.info/gems/cuke_slicer)
 
 Developer stuff:
-[![Build Status](https://travis-ci.org//grange-insurance/cuke_slicer.svg?branch=dev)](https://travis-ci.org/grange-insurance/cuke_slicer)
-[![Coverage Status](https://coveralls.io/repos/github/grange-insurance/cuke_slicer/badge.svg?branch=dev)](https://coveralls.io/github/grange-insurance/cuke_slicer?branch=dev)
-[![Maintainability](https://codeclimate.com/github/grange-insurance/cuke_slicer/badges/gpa.svg)](https://codeclimate.com/github/grange-insurance/cuke_slicer/maintainability)
+[![Build Status](https://travis-ci.org/enkessler/cuke_slicer.svg)](https://travis-ci.org/enkessler/cuke_slicer)
+[![Coverage Status](https://coveralls.io/repos/github/enkessler/cuke_slicer/badge.svg)](https://coveralls.io/github/enkessler/cuke_slicer)
+[![Maintainability](https://codeclimate.com/github/enkessler/cuke_slicer/badges/gpa.svg)](https://codeclimate.com/github/enkessler/cuke_slicer/maintainability)
 
 ---
 

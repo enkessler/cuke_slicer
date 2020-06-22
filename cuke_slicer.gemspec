@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["morrow748@gmail.com"]
   spec.summary       = %q{A gem for extracting test cases from a Cucumber test suite.}
   spec.description   = spec.summary
-  spec.homepage      = "https://github.com/grange-insurance/cuke_slicer"
+  spec.homepage      = "https://github.com/enkessler/cuke_slicer"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
