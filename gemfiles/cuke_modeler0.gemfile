@@ -18,6 +18,7 @@ if RUBY_VERSION =~ /^1\./
   gem 'rake', '< 12.3.0' # The 'rake' gem requires Ruby 2.x on/after this version
   gem 'rest-client', '< 2.0' # The 'rainbow' gem requires Ruby 2.x on/after this version
   gem 'simplecov-html', '< 0.11.0' # The 'simplecov-html' gem requires Ruby 2.x on/after this version
+  gem 'thor', '< 1.0' # The 'thor' gem requires Ruby 2.x on/after this version
   gem 'tins', '< 1.7' # The 'tins' gem requires Ruby 2.x on/after this version
   gem 'term-ansicolor', '< 1.4' # The 'term-ansicolor' gem requires Ruby 2.x on/after this version
   gem 'unf_ext', '< 0.0.7.3' # The 'unf_ext' gem requires Ruby 2.x on/after this version
