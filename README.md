@@ -8,6 +8,7 @@ User stuff:
 
 Developer stuff:
 [![Build Status](https://travis-ci.org/enkessler/cuke_slicer.svg)](https://travis-ci.org/enkessler/cuke_slicer)
+[![Build status](https://ci.appveyor.com/api/projects/status/706c8x5ug897wq3x?svg=true)](https://ci.appveyor.com/project/enkessler/cuke-slicer)
 [![Coverage Status](https://coveralls.io/repos/github/enkessler/cuke_slicer/badge.svg)](https://coveralls.io/github/enkessler/cuke_slicer)
 [![Maintainability](https://codeclimate.com/github/enkessler/cuke_slicer/badges/gpa.svg)](https://codeclimate.com/github/enkessler/cuke_slicer/maintainability)
 
