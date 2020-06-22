@@ -7,8 +7,8 @@ end
 
 gemspec :path => "../"
 
-# The version of CukeModeler being tested
-gem 'cuke_modeler', '~> 0.0'
+# Using the most recent release of the 0.x series in order to have all of the bug fixes.
+gem 'cuke_modeler', '0.4.1'
 
 if RUBY_VERSION =~ /^1\./
   gem 'cucumber', '< 3.0.0' # Ruby 1.9.x support dropped after this version
