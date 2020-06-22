@@ -9,6 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Eric Kessler"]
   spec.email         = ["morrow748@gmail.com"]
   spec.summary       = %q{A gem for extracting test cases from a Cucumber test suite.}
+  spec.description   = %q{Slices a Cucumber test suite into the smallest possible executable pieces (i.e. scenarios and individual outline example rows. These pieces can then be more easily used for running tests in parallel.}
   spec.homepage      = "https://github.com/enkessler/cuke_slicer"
   spec.license       = "MIT"
 
