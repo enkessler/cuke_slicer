@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gemspec :path => "../"
 
+# The version of CukeModeler being tested
 gem 'cuke_modeler', '~> 3.0'
 
 gem 'cucumber', '2.2.0' # `cucumber` 4.x does not currently work on JRuby
