@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+Nothing yet...
+
+## [2.2.0] - 2021-01-07
+
 ### Added
  - Ruby 3.x is now supported
 
@@ -53,7 +57,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
  - Initial release
 
-[Unreleased]: https://github.com/enkessler/cuke_slicer/compare/v2.1.0...HEAD
+[Unreleased]: https://github.com/enkessler/cuke_slicer/compare/v2.2.0...HEAD
+[2.2.0]: https://github.com/enkessler/cuke_slicer/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/enkessler/cuke_slicer/compare/v2.0.3...v2.1.0
 [2.0.3]: https://github.com/enkessler/cuke_slicer/compare/v2.0.2...v2.0.3
 [2.0.2]: https://github.com/enkessler/cuke_slicer/compare/v2.0.1...v2.0.2
