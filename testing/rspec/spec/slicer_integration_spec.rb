@@ -1,7 +1,7 @@
-require 'spec_helper'
+require_relative '../../environments/rspec_env'
 
 
-describe 'Slicer, Integration' do
+RSpec.describe 'Slicer, Integration' do
 
   let(:clazz) { CukeSlicer::Slicer }
   let(:slicer) { clazz.new }

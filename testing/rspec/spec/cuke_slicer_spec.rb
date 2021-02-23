@@ -1,9 +1,8 @@
-require 'spec_helper'
-require "#{File.dirname(__FILE__)}/spec_helper"
+require_relative '../../environments/rspec_env'
 require 'rubygems/mock_gem_ui'
 
 
-describe 'CukeSlicer, Unit' do
+RSpec.describe 'CukeSlicer, Unit' do
 
   let(:nodule) { CukeSlicer }
 
@@ -14,7 +13,7 @@ describe 'CukeSlicer, Unit' do
 
   describe 'the gem' do
 
-    let(:gemspec) { eval(File.read "#{File.dirname(__FILE__)}/../cuke_slicer.gemspec") }
+    let(:gemspec) { eval(File.read "#{File.dirname(__FILE__)}/../../../cuke_slicer.gemspec") }
 
     it 'validates cleanly' do
       mock_ui = Gem::MockGemUi.new

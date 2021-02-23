@@ -22,6 +22,8 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency "cuke_modeler", "< 4.0"
 
+  spec.add_development_dependency 'childprocess', '< 5.0'
+  spec.add_development_dependency 'ffi', '< 2.0' # This is an invisible dependency for the `childprocess` gem on Windows
   spec.add_development_dependency 'bundler', '< 3.0'
   spec.add_development_dependency 'rake', '< 13.0.0'
   spec.add_development_dependency "rspec", '~> 3.0'
@@ -30,5 +32,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "racatt", '~> 1.0'
   spec.add_development_dependency 'coveralls', '< 1.0.0'
   spec.add_development_dependency 'rainbow', '< 4.0.0'
+  spec.add_development_dependency 'rubocop', '<= 0.50.0' # RuboCop can not lint against Ruby 2.0 after this version
+  spec.add_development_dependency 'yard', '< 1.0'
 
 end
