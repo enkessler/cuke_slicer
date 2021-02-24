@@ -6,7 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-Nothing yet...
+# Changed
+ - No longer including every file in the Git repository as part of the gem. Only the files needed for using the 
+   gem (and the informative ones like the README) will be packaged into the released gem.
 
 ## [2.2.0] - 2021-01-07
 
