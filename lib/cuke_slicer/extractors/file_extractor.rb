@@ -6,11 +6,13 @@ require "cuke_slicer/helpers/extraction_helpers"
 # Internal helper module that is not part of the public API. Subject to change at any time.
 # :nodoc: all
 module CukeSlicer
+  # private
   class FileExtractor
 
     include ExtractionHelpers
 
 
+    # private
     def extract(target, filters, format, &block)
       Array.new.tap do |test_cases|
         unless target.feature.nil?

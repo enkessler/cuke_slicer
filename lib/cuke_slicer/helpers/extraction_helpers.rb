@@ -1,11 +1,13 @@
 # Internal helper module that is not part of the public API. Subject to change at any time.
 # :nodoc: all
 module CukeSlicer
+  # private
   module ExtractionHelpers
 
     include FilterHelpers
 
 
+    # private
     def extract_runnable_block_elements(things, filters, &block)
       Array.new.tap do |elements|
         things.each do |thing|
@@ -25,6 +27,7 @@ module CukeSlicer
       end
     end
 
+    # private
     def extract_runnable_elements(things)
       method_for_row_models = Gem.loaded_specs['cuke_modeler'].version.version[/^0/] ? :row_elements : :rows
 

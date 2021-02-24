@@ -1,11 +1,13 @@
 # Internal helper module that is not part of the public API. Subject to change at any time.
 # :nodoc: all
 module CukeSlicer
+  # private
   module FilterHelpers
 
     include MatchingHelpers
 
 
+    # private
     def apply_custom_filter(elements, &block)
       if block
         elements.reject! do |element|
@@ -14,6 +16,7 @@ module CukeSlicer
       end
     end
 
+    # private
     def filter_excluded_tags(elements, filters)
       if filters
         filters = [filters] unless filters.is_a?(Array)
@@ -26,6 +29,7 @@ module CukeSlicer
       end
     end
 
+    # private
     def filter_included_tags(elements, filters)
       if filters
         filters = [filters] unless filters.is_a?(Array)
@@ -36,6 +40,7 @@ module CukeSlicer
       end
     end
 
+    # private
     def filter_excluded_paths(elements, filters)
       if filters
         filters = [filters] unless filters.is_a?(Array)
@@ -46,6 +51,7 @@ module CukeSlicer
       end
     end
 
+    # private
     def filter_included_paths(elements, filters)
       if filters
         filters = [filters] unless filters.is_a?(Array)

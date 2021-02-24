@@ -1,8 +1,10 @@
 # Internal helper module that is not part of the public API. Subject to change at any time.
 # :nodoc: all
 module CukeSlicer
+  # private
   module MatchingHelpers
 
+    # private
     def matching_tag?(element, filters)
       filters.each do |filter|
         if filter.is_a?(Array)
@@ -17,16 +19,19 @@ module CukeSlicer
       true
     end
 
+    # private
     def and_filter_match(element, filter)
       filter_match(element, filter)
     end
 
+    # private
     def or_filter_match(element, filters)
       filters.any? do |filter|
         filter_match(element, filter)
       end
     end
 
+    # private
     def filter_match(element, filter)
       tag_values = element.all_tags
       tag_values = tag_values.collect { |tag| tag.name } unless Gem.loaded_specs['cuke_modeler'].version.version[/^[0]/]
@@ -38,6 +43,7 @@ module CukeSlicer
       end
     end
 
+    # private
     def matching_path?(element, filters)
       filters.any? do |filtered_path|
         if filtered_path.is_a?(Regexp)

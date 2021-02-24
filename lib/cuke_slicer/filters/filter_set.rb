@@ -6,6 +6,7 @@ require "cuke_slicer/collections/path_collection"
 # Internal helper module that is not part of the public API. Subject to change at any time.
 # :nodoc: all
 module CukeSlicer
+  # private
   class FilterSet
 
     include Helpers
@@ -16,6 +17,7 @@ module CukeSlicer
       self.filter_value = filter_value
     end
 
+    # private
     def validate
       block_unknown
       block_invalid

@@ -1,6 +1,7 @@
 # Internal helper module that is not part of the public API. Subject to change at any time.
 # :nodoc: all
 module CukeSlicer
+  # private
   module Helpers
 
     def str_regex?(parameter)
