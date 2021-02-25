@@ -12,9 +12,9 @@ rvm:
   - jruby-9.1.7.0
 
 gemfile:
-  - gemfiles/cuke_modeler1.gemfile
-  - gemfiles/cuke_modeler2.gemfile
-  - gemfiles/cuke_modeler3.gemfile
+  - testing/gemfiles/cuke_modeler1.gemfile
+  - testing/gemfiles/cuke_modeler2.gemfile
+  - testing/gemfiles/cuke_modeler3.gemfile
 
 matrix:
   exclude:
