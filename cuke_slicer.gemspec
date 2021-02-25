@@ -41,7 +41,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", '~> 3.0'
   spec.add_development_dependency 'cucumber', '< 5.0.0'
   spec.add_development_dependency 'simplecov', '<= 0.16.1' # Coveralls gem does not support any newer version than this
-  spec.add_development_dependency "racatt", '~> 1.0'
   spec.add_development_dependency 'coveralls', '< 1.0.0'
   spec.add_development_dependency 'rainbow', '< 4.0.0'
   spec.add_development_dependency 'rubocop', '<= 0.50.0' # RuboCop can not lint against Ruby 2.0 after this version
