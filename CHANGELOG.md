@@ -6,9 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-# Changed
- - No longer including every file in the Git repository as part of the gem. Only the files needed for using the 
-   gem (and the informative ones like the README) will be packaged into the released gem.
+### Removed
+  - Removed support for some older versions of the gem's dependencies:
+    - Ruby 1.x
+    - CukeModeler 0.x
+
+### Changed
+  - No longer including every file in the Git repository as part of the gem. Only the files needed for using the 
+    gem (and the informative ones like the README) will be packaged into the released gem.
 
 ## [2.2.0] - 2021-01-07
 

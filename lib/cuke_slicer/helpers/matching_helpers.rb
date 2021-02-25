@@ -33,8 +33,7 @@ module CukeSlicer
 
     # private
     def filter_match(element, filter)
-      tag_values = element.all_tags
-      tag_values = tag_values.collect { |tag| tag.name } unless Gem.loaded_specs['cuke_modeler'].version.version[/^[0]/]
+      tag_values = element.all_tags.map(&:name)
 
       if filter.is_a?(Regexp)
         tag_values.any? { |tag| tag =~ filter }

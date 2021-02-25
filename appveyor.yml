@@ -4,22 +4,8 @@ environment:
   matrix:
 
     # NOTES:
-    #   - AppVeyor does not have a 64-bit Ruby 1.9.3
-    #   - Ruby 2.3 doesn't seem to work on AppVeyor
+    #   - Only Ruby 2.4 and higher seem to work on AppVeyor
 
-    - RUBY_VERSION: 193
-      BUNDLE_GEMFILE: gemfiles/cuke_modeler0.gemfile
-    - RUBY_VERSION: 24
-      BUNDLE_GEMFILE: gemfiles/cuke_modeler0.gemfile
-    - RUBY_VERSION: 24-x64
-      BUNDLE_GEMFILE: gemfiles/cuke_modeler0.gemfile
-    - RUBY_VERSION: 25
-      BUNDLE_GEMFILE: gemfiles/cuke_modeler0.gemfile
-    - RUBY_VERSION: 25-x64
-      BUNDLE_GEMFILE: gemfiles/cuke_modeler0.gemfile
-
-    - RUBY_VERSION: 193
-      BUNDLE_GEMFILE: gemfiles/cuke_modeler1.gemfile
     - RUBY_VERSION: 24
       BUNDLE_GEMFILE: gemfiles/cuke_modeler1.gemfile
     - RUBY_VERSION: 24-x64
@@ -29,8 +15,6 @@ environment:
     - RUBY_VERSION: 25-x64
       BUNDLE_GEMFILE: gemfiles/cuke_modeler1.gemfile
 
-    - RUBY_VERSION: 193
-      BUNDLE_GEMFILE: gemfiles/cuke_modeler2.gemfile
     - RUBY_VERSION: 24
       BUNDLE_GEMFILE: gemfiles/cuke_modeler2.gemfile
     - RUBY_VERSION: 24-x64
@@ -50,6 +34,9 @@ environment:
     - RUBY_VERSION: 25-x64
       BUNDLE_GEMFILE: gemfiles/cuke_modeler3.gemfile
 
+# Allow Windows builds to use CRLF as expected by linting tools, etc.
+init:
+  - git config --global core.autocrlf true
 
 install:
   - set PATH=C:\Ruby%RUBY_VERSION%\bin;%PATH%

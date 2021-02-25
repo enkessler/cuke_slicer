@@ -30,9 +30,9 @@ Gem::Specification.new do |spec|
   end
   spec.require_paths = ['lib']
 
-  spec.required_ruby_version = '>= 1.9.3', '< 4.0'
+  spec.required_ruby_version = '>= 2.0', '< 4.0'
 
-  spec.add_runtime_dependency "cuke_modeler", "< 4.0"
+  spec.add_runtime_dependency "cuke_modeler", '>= 1.0', '< 4.0'
 
   spec.add_development_dependency 'childprocess', '< 5.0'
   spec.add_development_dependency 'ffi', '< 2.0' # This is an invisible dependency for the `childprocess` gem on Windows

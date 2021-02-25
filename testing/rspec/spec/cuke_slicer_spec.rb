@@ -186,13 +186,13 @@ RSpec.describe 'the gem' do
 
   describe 'dependencies' do
 
-    it 'works with Ruby 1 through 3' do
+    it 'works with Ruby 2 through 3' do
       ruby_version_limits = @gemspec.required_ruby_version.requirements.map(&:join)
 
-      expect(ruby_version_limits).to match_array(['>=1.9.3', '<4.0'])
+      expect(ruby_version_limits).to match_array(['>=2.0', '<4.0'])
     end
 
-    it 'works with CukeModeler 0 through 3' do
+    it 'works with CukeModeler 1 through 3' do
       cuke_modeler_version_limits = @gemspec.dependencies
                                             .find do |dependency|
                                               (dependency.type == :runtime) &&
@@ -201,7 +201,7 @@ RSpec.describe 'the gem' do
                                             .requirement.requirements.map(&:join)
 
       # Note: No lower bound is specified because 9.x was the first release of the gem
-      expect(cuke_modeler_version_limits).to match_array(['<4.0'])
+      expect(cuke_modeler_version_limits).to match_array(['>=1.0', '<4.0'])
     end
 
   end

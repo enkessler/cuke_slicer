@@ -29,13 +29,11 @@ module CukeSlicer
 
     # private
     def extract_runnable_elements(things)
-      method_for_row_models = Gem.loaded_specs['cuke_modeler'].version.version[/^0/] ? :row_elements : :rows
-
       Array.new.tap do |elements|
         things.each do |thing|
           if thing.is_a?(CukeModeler::Example)
             # Slicing in order to remove the parameter row element
-            elements.concat(thing.send(method_for_row_models).slice(1, thing.rows.count))
+            elements.concat(thing.rows.slice(1, thing.rows.count))
           else
             elements << thing
           end
