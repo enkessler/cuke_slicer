@@ -12,7 +12,7 @@ Then(/^no test cases are found$/) do
 end
 
 Then(/^The following filter types are valid:$/) do |filter_types|
-  filter_types = filter_types.raw.flatten.collect { |filter| filter.to_sym }
+  filter_types = filter_types.raw.flatten.map(&:to_sym)
 
   expect(CukeSlicer::Slicer.known_filters).to match_array(filter_types)
 end

@@ -9,6 +9,12 @@ require_relative '../cucumber/step_definitions/setup_steps'
 require_relative '../cucumber/step_definitions/verification_steps'
 
 
+def process_filter(filter)
+  filter.sub!('path/to', @default_file_directory)
+  filter =~ %r{^/.+/$} ? Regexp.new(filter.slice(1..-2)) : filter
+end
+
+
 Before do
   @default_file_directory = CukeSlicer::FileHelper.create_directory
   @default_feature_file_name = 'unnamed_feature.feature'

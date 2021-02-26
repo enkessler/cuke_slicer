@@ -6,17 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 3
-# Cop supports --auto-correct.
-Layout/AlignArray:
-  Exclude:
-    - 'rakefiles/other_tasks.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Layout/BlockEndNewline:
-  Exclude:
-    - 'testing/rspec/spec/slicer_integration_spec.rb'
 
 # Offense count: 8
 # Cop supports --auto-correct.
@@ -25,43 +14,12 @@ Layout/BlockEndNewline:
 Layout/CaseIndentation:
   Exclude:
     - 'lib/cuke_slicer/extractors/file_extractor.rb'
-    - 'testing/cucumber/step_definitions/setup_steps.rb'
-    - 'testing/rspec/spec/slicer_integration_spec.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Layout/EmptyLineAfterMagicComment:
-  Exclude:
-    - 'cuke_slicer.gemspec'
-
-# Offense count: 43
-# Cop supports --auto-correct.
-Layout/EmptyLines:
-  Enabled: false
 
 # Offense count: 1
 # Cop supports --auto-correct.
 Layout/EmptyLinesAroundBeginBody:
   Exclude:
     - 'lib/cuke_slicer/slicer.rb'
-
-# Offense count: 35
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: empty_lines, no_empty_lines
-Layout/EmptyLinesAroundBlockBody:
-  Exclude:
-    - 'cuke_slicer.gemspec'
-    - 'rakefiles/ci_tasks.rb'
-    - 'rakefiles/documentation_tasks.rb'
-    - 'rakefiles/other_tasks.rb'
-    - 'rakefiles/release_tasks.rb'
-    - 'rakefiles/reporting_tasks.rb'
-    - 'rakefiles/testing_tasks.rb'
-    - 'testing/environments/rspec_env.rb'
-    - 'testing/rspec/spec/cuke_slicer_spec.rb'
-    - 'testing/rspec/spec/slicer_integration_spec.rb'
-    - 'testing/rspec/spec/slicer_unit_spec.rb'
 
 # Offense count: 16
 # Cop supports --auto-correct.
@@ -76,7 +34,6 @@ Layout/EmptyLinesAroundClassBody:
     - 'lib/cuke_slicer/extractors/file_extractor.rb'
     - 'lib/cuke_slicer/filters/filter_set.rb'
     - 'lib/cuke_slicer/slicer.rb'
-    - 'testing/file_helper.rb'
 
 # Offense count: 15
 # Cop supports --auto-correct.
@@ -84,92 +41,46 @@ Layout/EmptyLinesAroundClassBody:
 # SupportedStyles: empty_lines, empty_lines_except_namespace, empty_lines_special, no_empty_lines
 Layout/EmptyLinesAroundModuleBody:
   Exclude:
-    - 'cuke_slicer_helper.rb'
     - 'lib/cuke_slicer/helpers/extraction_helpers.rb'
     - 'lib/cuke_slicer/helpers/filter_helpers.rb'
     - 'lib/cuke_slicer/helpers/helpers.rb'
     - 'lib/cuke_slicer/helpers/matching_helpers.rb'
     - 'lib/cuke_slicer/slicer.rb'
-    - 'testing/file_helper.rb'
-
-# Offense count: 1
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: native, lf, crlf
-Layout/EndOfLine:
-  Exclude:
-    - 'testing/cucumber/step_definitions/verification_steps.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Layout/MultilineBlockLayout:
-  Exclude:
-    - 'testing/rspec/spec/slicer_integration_spec.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, EnforcedStyleForEmptyBraces, SupportedStylesForEmptyBraces, SpaceBeforeBlockParameters.
-# SupportedStyles: space, no_space
-# SupportedStylesForEmptyBraces: space, no_space
-Layout/SpaceInsideBlockBraces:
-  Exclude:
-    - 'testing/rspec/spec/slicer_integration_spec.rb'
-
-# Offense count: 40
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, EnforcedStyleForEmptyBraces, SupportedStylesForEmptyBraces.
-# SupportedStyles: space, no_space, compact
-# SupportedStylesForEmptyBraces: space, no_space
-Layout/SpaceInsideHashLiteralBraces:
-  Exclude:
-    - 'testing/cucumber/step_definitions/action_steps.rb'
-    - 'testing/rspec/spec/slicer_integration_spec.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: final_newline, final_blank_line
-Layout/TrailingBlankLines:
-  Exclude:
-    - 'testing/cucumber/step_definitions/verification_steps.rb'
 
 # Offense count: 3
 # Cop supports --auto-correct.
 Lint/DeprecatedClassMethods:
   Exclude:
     - 'lib/cuke_slicer/slicer.rb'
-    - 'testing/cucumber/step_definitions/setup_steps.rb'
 
 # Offense count: 1
 Lint/RescueWithoutErrorClass:
   Exclude:
     - 'lib/cuke_slicer/slicer.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: AllowUnusedKeywordArguments, IgnoreEmptyMethods.
-Lint/UnusedMethodArgument:
-  Exclude:
-    - 'testing/rspec/spec/slicer_integration_spec.rb'
-
 # Offense count: 4
 Metrics/AbcSize:
-  Max: 17
+  Exclude:
+    - 'lib/**/*'
 
 # Offense count: 10
 # Configuration parameters: CountComments, ExcludedMethods.
 Metrics/BlockLength:
-  Max: 188
+  Exclude:
+    - 'lib/**/*'
 
 # Offense count: 132
 # Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
 # URISchemes: http, https
 Metrics/LineLength:
-  Max: 226
+  Exclude:
+    - 'lib/**/*'
 
 # Offense count: 3
 # Configuration parameters: CountComments.
 Metrics/MethodLength:
-  Max: 18
+  Exclude:
+    - 'lib/**/*'
 
 # Offense count: 2
 # Configuration parameters: NamePrefix, NamePrefixBlacklist, NameWhitelist.
@@ -178,28 +89,13 @@ Metrics/MethodLength:
 # NameWhitelist: is_a?
 Naming/PredicateName:
   Exclude:
-    - 'spec/**/*'
     - 'lib/cuke_slicer/helpers/helpers.rb'
-
-# Offense count: 2
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: snake_case, normalcase, non_integer
-Naming/VariableNumber:
-  Exclude:
-    - 'testing/rspec/spec/slicer_integration_spec.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.
 Performance/RedundantBlockCall:
   Exclude:
     - 'lib/cuke_slicer/helpers/filter_helpers.rb'
-
-# Offense count: 4
-Security/Eval:
-  Exclude:
-    - 'testing/cucumber/step_definitions/action_steps.rb'
-    - 'testing/cucumber/step_definitions/setup_steps.rb'
-    - 'testing/rspec/spec/cuke_slicer_spec.rb'
 
 # Offense count: 3
 # Cop supports --auto-correct.
@@ -208,17 +104,6 @@ Security/Eval:
 Style/AndOr:
   Exclude:
     - 'lib/cuke_slicer/helpers/helpers.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, ProceduralMethods, FunctionalMethods, IgnoredMethods.
-# SupportedStyles: line_count_based, semantic, braces_for_chaining
-# ProceduralMethods: benchmark, bm, bmbm, create, each_with_object, measure, new, realtime, tap, with_object
-# FunctionalMethods: let, let!, subject, watch
-# IgnoredMethods: lambda, proc, it
-Style/BlockDelimiters:
-  Exclude:
-    - 'testing/rspec/spec/slicer_integration_spec.rb'
 
 # Offense count: 2
 # Cop supports --auto-correct.
@@ -232,8 +117,6 @@ Style/ConditionalAssignment:
 # Offense count: 12
 Style/Documentation:
   Exclude:
-    - 'spec/**/*'
-    - 'test/**/*'
     - 'lib/cuke_slicer/collections/nested_tag_collection.rb'
     - 'lib/cuke_slicer/collections/path_collection.rb'
     - 'lib/cuke_slicer/collections/tag_collection.rb'
@@ -251,7 +134,6 @@ Style/Documentation:
 Style/EmptyCaseCondition:
   Exclude:
     - 'lib/cuke_slicer/extractors/file_extractor.rb'
-    - 'testing/rspec/spec/slicer_integration_spec.rb'
 
 # Offense count: 4
 # Cop supports --auto-correct.
@@ -261,20 +143,6 @@ Style/EmptyLiteral:
     - 'lib/cuke_slicer/extractors/file_extractor.rb'
     - 'lib/cuke_slicer/helpers/extraction_helpers.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, AutoCorrectEncodingComment.
-# SupportedStyles: when_needed, always, never
-Style/Encoding:
-  Exclude:
-    - 'cuke_slicer.gemspec'
-
-# Offense count: 2
-# Configuration parameters: AllowedVariables.
-Style/GlobalVars:
-  Exclude:
-    - 'testing/rspec/spec/slicer_integration_spec.rb'
-
 # Offense count: 7
 # Configuration parameters: MinBodyLength.
 Style/GuardClause:
@@ -282,14 +150,6 @@ Style/GuardClause:
     - 'lib/cuke_slicer/filters/filter_set.rb'
     - 'lib/cuke_slicer/helpers/filter_helpers.rb'
     - 'lib/cuke_slicer/slicer.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, UseHashRocketsWithSymbolValues, PreferHashRocketsForNonAlnumEndingSymbols.
-# SupportedStyles: ruby19, hash_rockets, no_mixed_keys, ruby19_no_mixed_keys
-Style/HashSyntax:
-  Exclude:
-    - 'Rakefile'
 
 # Offense count: 4
 # Cop supports --auto-correct.
@@ -309,32 +169,9 @@ Style/MutableConstant:
     - 'lib/cuke_slicer/version.rb'
 
 # Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: Whitelist.
-# Whitelist: be, be_a, be_an, be_between, be_falsey, be_kind_of, be_instance_of, be_truthy, be_within, eq, eql, end_with, include, match, raise_error, respond_to, start_with
-Style/NestedParenthesizedCalls:
-  Exclude:
-    - 'testing/rspec/spec/cuke_slicer_spec.rb'
-
-# Offense count: 1
 Style/OptionalArguments:
   Exclude:
     - 'lib/cuke_slicer/slicer.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: PreferredDelimiters.
-Style/PercentLiteralDelimiters:
-  Exclude:
-    - 'cuke_slicer.gemspec'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, AllowInnerSlashes.
-# SupportedStyles: slashes, percent_r, mixed
-Style/RegexpLiteral:
-  Exclude:
-    - 'testing/cucumber/step_definitions/action_steps.rb'
 
 # Offense count: 28
 # Cop supports --auto-correct.
@@ -342,7 +179,6 @@ Style/RegexpLiteral:
 # SupportedStyles: single_quotes, double_quotes
 Style/StringLiterals:
   Exclude:
-    - 'cuke_slicer.gemspec'
     - 'lib/cuke_slicer.rb'
     - 'lib/cuke_slicer/collections/nested_tag_collection.rb'
     - 'lib/cuke_slicer/collections/path_collection.rb'
@@ -351,7 +187,6 @@ Style/StringLiterals:
     - 'lib/cuke_slicer/filters/filter_set.rb'
     - 'lib/cuke_slicer/slicer.rb'
     - 'lib/cuke_slicer/version.rb'
-    - 'testing/rspec/spec/slicer_integration_spec.rb'
 
 # Offense count: 2
 # Cop supports --auto-correct.
@@ -368,10 +203,3 @@ Style/SymbolArray:
 Style/SymbolProc:
   Exclude:
     - 'lib/cuke_slicer/helpers/matching_helpers.rb'
-    - 'testing/cucumber/step_definitions/verification_steps.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/UnneededPercentQ:
-  Exclude:
-    - 'cuke_slicer.gemspec'

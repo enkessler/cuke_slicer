@@ -6,11 +6,14 @@ RSpec.describe 'Slicer, Integration' do
   let(:clazz) { CukeSlicer::Slicer }
   let(:slicer) { clazz.new }
   let(:test_file) { "#{@default_file_directory}/a_test.feature" }
-  let(:test_file_text) { "Feature: Test feature
+  let(:test_file_text) do
+    "Feature: Test feature
 
-                          @tag
-                          Scenario: Test scenario
-                            * some step" }
+      @tag
+      Scenario: Test scenario
+        * some step"
+  end
+
 
   before(:each) do
     File.write(test_file, test_file_text)
@@ -89,12 +92,13 @@ RSpec.describe 'Slicer, Integration' do
       it 'complains if told to slice an incorrectly formatted feature file' do
         File.open(test_file, 'w') { |file| file.write('foobar') }
 
-        expect { slicer.slice(test_file, :file_line) }.to raise_error(ArgumentError, /syntax.*lexing problem.*#{test_file}/i)
+        expect { slicer.slice(test_file, :file_line) }
+          .to raise_error(ArgumentError, /syntax.*lexing problem.*#{test_file}/i)
       end
 
       it 'does not swallow unexpected exceptions while slicing' do
         begin
-          $old_method = CukeModeler::Parsing.method(:parse_text)
+          CukeSlicer::HelperMethods.test_storage[:old_method] = CukeModeler::Parsing.method(:parse_text)
 
           # Custom error type in order to ensure that we are throwing the correct thing
           module CukeSlicer
@@ -106,7 +110,7 @@ RSpec.describe 'Slicer, Integration' do
           module CukeModeler
             module Parsing
               class << self
-                def parse_text(*args)
+                def parse_text(*_args)
                   raise(CukeSlicer::TestError, 'something went wrong')
                 end
               end
@@ -122,7 +126,7 @@ RSpec.describe 'Slicer, Integration' do
           module CukeModeler
             module Parsing
               class << self
-                define_method(:parse_text, $old_method)
+                define_method(:parse_text, CukeSlicer::HelperMethods.test_storage[:old_method])
               end
             end
           end
@@ -144,9 +148,9 @@ RSpec.describe 'Slicer, Integration' do
 
         case
           when filter.to_s =~ /path/
-            nothing_provided = slicer.slice(test_file, {filter => []}, :file_line)
+            nothing_provided = slicer.slice(test_file, { filter => [] }, :file_line)
           when filter.to_s =~ /tag/
-            nothing_provided = slicer.slice(test_file, {filter => []}, :file_line)
+            nothing_provided = slicer.slice(test_file, { filter => [] }, :file_line)
           else
             raise(ArgumentError, "Unknown filter '#{filter}'")
         end
@@ -159,18 +163,19 @@ RSpec.describe 'Slicer, Integration' do
     it 'can combine any and all filters' do
       filters = clazz.known_filters
 
-      applied_filters = {excluded_tags: '@a',
-                         included_tags: /./,
-                         excluded_paths: 'a',
-                         included_paths: /./}
+      applied_filters = { excluded_tags: '@a',
+                          included_tags: /./,
+                          excluded_paths: 'a',
+                          included_paths: /./ }
 
-      block_filter = eval("Proc.new { |test_case| false}")
+      block_filter = eval('Proc.new { |test_case| false}')
 
       # A reminder to update this test if new filters are added in the future
       expect(applied_filters.keys).to match_array(filters)
 
 
-      expect { @slice_output = slicer.slice(@default_file_directory, applied_filters, :file_line, &block_filter) }.to_not raise_error
+      expect { @slice_output = slicer.slice(@default_file_directory, applied_filters, :file_line, &block_filter) }
+        .to_not raise_error
       expect(@slice_output).to be_an(Array)
       expect(@slice_output).to_not be_empty
     end
@@ -182,11 +187,40 @@ RSpec.describe 'Slicer, Integration' do
         path_filter_types = clazz.known_filters.select { |filter| filter.to_s =~ /path/ }
 
         path_filter_types.each do |filter|
-          expect { slicer.slice(@default_file_directory, {filter => '@some_value'}, :file_line) }.to_not raise_error
-          expect { slicer.slice(@default_file_directory, {filter => /some_pattern/}, :file_line)}.to_not raise_error
-          expect { slicer.slice(@default_file_directory, {filter => ['@some_value', /some_pattern/]}, :file_line)}.to_not raise_error
-          expect { slicer.slice(@default_file_directory, {filter => :something_else}, :file_line) }.to raise_error(ArgumentError, /must be a/i)
-          expect { slicer.slice(@default_file_directory, {filter => [:something_else]}, :file_line) }.to raise_error(ArgumentError, /must be a/i)
+          expect do
+            slicer.slice(@default_file_directory,
+                         { filter => '@some_value' },
+                         :file_line)
+          end
+            .to_not raise_error
+
+          expect do
+            slicer.slice(@default_file_directory,
+                         { filter => /some_pattern/ },
+                         :file_line)
+          end
+            .to_not raise_error
+
+          expect do
+            slicer.slice(@default_file_directory,
+                         { filter => ['@some_value', /some_pattern/] },
+                         :file_line)
+          end
+            .to_not raise_error
+
+          expect do
+            slicer.slice(@default_file_directory,
+                         { filter => :something_else },
+                         :file_line)
+          end
+            .to raise_error(ArgumentError, /must be a/i)
+
+          expect do
+            slicer.slice(@default_file_directory,
+                         { filter => [:something_else] },
+                         :file_line)
+          end
+            .to raise_error(ArgumentError, /must be a/i)
         end
       end
 
@@ -194,13 +228,55 @@ RSpec.describe 'Slicer, Integration' do
         tag_filter_types = clazz.known_filters.select { |filter| filter.to_s =~ /tag/ }
 
         tag_filter_types.each do |filter|
-          expect { slicer.slice(@default_file_directory, {filter => '@some_value'}, :file_line) }.to_not raise_error
-          expect { slicer.slice(@default_file_directory, {filter => /some_pattern/}, :file_line) }.to_not raise_error
-          expect { slicer.slice(@default_file_directory, {filter => ['@some_value', /some_pattern/]}, :file_line) }.to_not raise_error
-          expect { slicer.slice(@default_file_directory, {filter => ['@some_value', [/nested_pattern/]]}, :file_line) }.to_not raise_error
-          expect { slicer.slice(@default_file_directory, {filter => ['@some_value', [/nested_pattern/, :bad_value]]}, :file_line) }.to raise_error(ArgumentError, /must be a/i)
-          expect { slicer.slice(@default_file_directory, {filter => :something_else}, :file_line) }.to raise_error(ArgumentError, /must be a/i)
-          expect { slicer.slice(@default_file_directory, {filter => [:something_else]}, :file_line) }.to raise_error(ArgumentError, /must be a/i)
+          expect do
+            slicer.slice(@default_file_directory,
+                         { filter => '@some_value' },
+                         :file_line)
+          end
+            .to_not raise_error
+
+          expect do
+            slicer.slice(@default_file_directory,
+                         { filter => /some_pattern/ },
+                         :file_line)
+          end
+            .to_not raise_error
+
+          expect do
+            slicer.slice(@default_file_directory,
+
+                         { filter => ['@some_value', /some_pattern/] },
+                         :file_line)
+          end
+            .to_not raise_error
+
+          expect do
+            slicer.slice(@default_file_directory,
+                         { filter => ['@some_value', [/nested_pattern/]] },
+                         :file_line)
+          end
+            .to_not raise_error
+
+          expect do
+            slicer.slice(@default_file_directory,
+                         { filter => ['@some_value', [/nested_pattern/, :bad_value]] },
+                         :file_line)
+          end
+            .to raise_error(ArgumentError, /must be a/i)
+
+          expect do
+            slicer.slice(@default_file_directory,
+                         { filter => :something_else },
+                         :file_line)
+          end
+            .to raise_error(ArgumentError, /must be a/i)
+
+          expect do
+            slicer.slice(@default_file_directory,
+                         { filter => [:something_else] },
+                         :file_line)
+          end
+            .to raise_error(ArgumentError, /must be a/i)
         end
       end
 
@@ -208,16 +284,28 @@ RSpec.describe 'Slicer, Integration' do
         tag_filter_types = clazz.known_filters.select { |filter| filter.to_s =~ /tag/ }
 
         tag_filter_types.each do |filter|
-          expect { slicer.slice(@default_file_directory, {filter => ['@some_value', [/nested_pattern/]]}, :file_line) }.to_not raise_error
-          expect { slicer.slice(@default_file_directory, {filter => ['@some_value', [/nested_pattern/, ['way_too_nested']]]}, :file_line) }.to raise_error(ArgumentError, /cannot.* nested/i)
+          expect do
+            slicer.slice(@default_file_directory,
+                         { filter => ['@some_value', [/nested_pattern/]] },
+                         :file_line)
+          end
+            .to_not raise_error
+
+          expect do
+            slicer.slice(@default_file_directory,
+                         { filter => ['@some_value', [/nested_pattern/, ['way_too_nested']]] },
+                         :file_line)
+          end
+            .to raise_error(ArgumentError, /cannot.* nested/i)
         end
       end
 
       it 'complains if given an unknown filter' do
         unknown_filter_type = :unknown_filter
-        options = {unknown_filter_type => 'foo'}
+        options = { unknown_filter_type => 'foo' }
 
-        expect { slicer.slice(@default_file_directory, options, :file_line) }.to raise_error(ArgumentError, /unknown filter.*#{unknown_filter_type}/i)
+        expect { slicer.slice(@default_file_directory, options, :file_line) }
+          .to raise_error(ArgumentError, /unknown filter.*#{unknown_filter_type}/i)
       end
 
     end

@@ -7,7 +7,10 @@ When(/^test cases are extracted from "([^"]*)"$/) do |target|
   filters[:excluded_paths] = @excluded_path_filters if @excluded_path_filters
   filters[:included_paths] = @included_path_filters if @included_path_filters
 
-  @output[target] = CukeSlicer::Slicer.new.slice("#{@default_file_directory}/#{target}", filters, :file_line, &@custom_filter)
+  @output[target] = CukeSlicer::Slicer.new.slice("#{@default_file_directory}/#{target}",
+                                                 filters,
+                                                 :file_line,
+                                                 &@custom_filter)
 end
 
 When(/^test cases are extracted from it$/) do
@@ -85,14 +88,9 @@ When(/^test cases are extracted from "([^"]*)" using "([^"]*)"$/) do |target, in
   @output[target] = CukeSlicer::Slicer.new.slice("#{@default_file_directory}/#{target}", options, :file_line)
 end
 
-def process_filter(filter)
-  filter.sub!('path/to', @default_file_directory)
-  filter =~ /^\/.+\/$/ ? Regexp.new(filter.slice(1..-2)) : filter
-end
-
 When(/^it tries to extract test cases using an unknown filter type$/) do
   begin
-    @slicer.slice(@default_file_directory, {unknown_filter: 'foo'}, :file_line)
+    @slicer.slice(@default_file_directory, { unknown_filter: 'foo' }, :file_line)
   rescue ArgumentError => e
     @error_raised = e
   end
@@ -100,7 +98,7 @@ end
 
 When(/^it tries to extract test cases using an invalid filter$/) do
   begin
-    @slicer.slice(@default_file_directory, {included_tags: 7}, :file_line)
+    @slicer.slice(@default_file_directory, { included_tags: 7 }, :file_line)
   rescue ArgumentError => e
     @error_raised = e
   end

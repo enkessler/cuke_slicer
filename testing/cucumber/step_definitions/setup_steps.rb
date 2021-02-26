@@ -54,7 +54,7 @@ Given(/^the file "([^"]*)" does not exist$/) do |file_name|
   @targets << file_name
 
   file_path = "#{@test_directory}/#{file_name}"
-  FileUtils.rm(file_path) if File.exists?(file_path)
+  FileUtils.rm(file_path) if File.exist?(file_path)
 end
 
 Given(/^the directory "([^"]*)" does not exist$/) do |directory_name|
@@ -62,7 +62,7 @@ Given(/^the directory "([^"]*)" does not exist$/) do |directory_name|
   @targets << directory_name
 
   file_path = "#{@default_file_directory}/#{directory_name}"
-  FileUtils.remove_dir(file_path) if File.exists?(file_path)
+  FileUtils.remove_dir(file_path) if File.exist?(file_path)
 end
 
 And(/^the file "([^"]*)"$/) do |file_name|

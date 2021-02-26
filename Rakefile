@@ -14,4 +14,4 @@ require_relative 'rakefiles/reporting_tasks'
 require_relative 'rakefiles/testing_tasks'
 
 
-task :default => 'cuke_slicer:test_everything'
+task :default => 'cuke_slicer:test_everything' # rubocop:disable Style/HashSyntax
