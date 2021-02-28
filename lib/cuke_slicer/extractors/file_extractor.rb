@@ -1,7 +1,9 @@
-require "cuke_slicer/helpers/matching_helpers"
-require "cuke_slicer/helpers/filter_helpers"
-require "cuke_slicer/helpers/extraction_helpers"
+require 'cuke_slicer/helpers/matching_helpers'
+require 'cuke_slicer/helpers/filter_helpers'
+require 'cuke_slicer/helpers/extraction_helpers'
 
+# TODO: get rid of this class
+# rubocop:disable Metrics/AbcSize
 
 # Internal helper module that is not part of the public API. Subject to change at any time.
 # :nodoc: all
@@ -14,7 +16,7 @@ module CukeSlicer
 
     # private
     def extract(target, filters, format, &block)
-      Array.new.tap do |test_cases|
+      [].tap do |test_cases|
         unless target.feature.nil?
           tests = target.feature.tests
 
@@ -34,3 +36,5 @@ module CukeSlicer
 
   end
 end
+
+# rubocop:enable Metrics/AbcSize

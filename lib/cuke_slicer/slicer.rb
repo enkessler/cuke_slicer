@@ -1,8 +1,9 @@
-require "cuke_slicer/extractors/directory_extractor"
-require "cuke_slicer/extractors/file_extractor"
-require "cuke_slicer/filters/filter_set"
+require 'cuke_slicer/extractors/directory_extractor'
+require 'cuke_slicer/extractors/file_extractor'
+require 'cuke_slicer/filters/filter_set'
 
-
+# TODO: refactor all of this
+# rubocop:disable Metrics/AbcSize, Style/OptionalArguments
 module CukeSlicer
 
   # The object responsible for slicing up a Cucumber test suite into discrete test cases.
@@ -32,29 +33,23 @@ module CukeSlicer
       begin
         target = File.directory?(target) ? CukeModeler::Directory.new(target) : CukeModeler::FeatureFile.new(target)
       rescue => e
-        if e.message =~ /lexing|parsing/i
-          raise(ArgumentError, "A syntax or lexing problem was encountered while trying to parse #{target}")
-        else
-          raise e
-        end
-
+        raise e unless e.message =~ /lexing|parsing/i
+        raise(ArgumentError, "A syntax or lexing problem was encountered while trying to parse #{target}")
       end
 
       if target.is_a?(CukeModeler::Directory)
-        sliced_tests = DirectoryExtractor.new.extract(target, filters, format, &block)
+        DirectoryExtractor.new.extract(target, filters, format, &block)
       else
-        sliced_tests = FileExtractor.new.extract(target, filters, format, &block)
+        FileExtractor.new.extract(target, filters, format, &block)
       end
-
-      sliced_tests
     end
 
     # The filtering options that are currently supported by the slicer.
     def self.known_filters
-      [:excluded_tags,
-       :included_tags,
-       :excluded_paths,
-       :included_paths]
+      %i[excluded_tags
+         included_tags
+         excluded_paths
+         included_paths]
     end
 
 
@@ -62,7 +57,7 @@ module CukeSlicer
 
 
     def validate_target(target)
-      raise(ArgumentError, "File or directory '#{target}' does not exist") unless File.exists?(target.to_s)
+      raise(ArgumentError, "File or directory '#{target}' does not exist") unless File.exist?(target.to_s)
     end
 
     def validate_filters(filters)
@@ -71,8 +66,9 @@ module CukeSlicer
     end
 
     def validate_format(format)
-      raise(ArgumentError, "Invalid Output Format: #{format}") unless [:test_object, :file_line].include?(format)
+      raise(ArgumentError, "Invalid Output Format: #{format}") unless %i[test_object file_line].include?(format)
     end
 
   end
 end
+# rubocop:enable Metrics/AbcSize, Style/OptionalArguments

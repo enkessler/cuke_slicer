@@ -1,5 +1,5 @@
-require "cuke_slicer/helpers/helpers"
-require "cuke_slicer/collections/nested_tag_collection"
+require 'cuke_slicer/helpers/helpers'
+require 'cuke_slicer/collections/nested_tag_collection'
 
 
 # Internal helper module that is not part of the public API. Subject to change at any time.
@@ -11,14 +11,14 @@ module CukeSlicer
     include Helpers
 
 
-    def initialize parameters
+    def initialize(parameters)
       self.filter_values = parameters
     end
 
     # private
     def validate
       filter_values.each do |val|
-        raise(ArgumentError, "Filter '#{val}' must be a String, Regexp, or Array. Got #{val.class}") unless str_regex_arr?(val)
+        raise(ArgumentError, "Filter '#{val}' must be a String, Regexp, or Array. Got #{val.class}") unless str_regex_arr?(val) # rubocop:disable Metrics/LineLength
         NestedTagCollection.new(val).validate if val.is_a?(Array)
       end
     end

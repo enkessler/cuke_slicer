@@ -1,3 +1,7 @@
+# TODO: get rid of this module
+# rubocop:disable Metrics/AbcSize
+
+
 # Internal helper module that is not part of the public API. Subject to change at any time.
 # :nodoc: all
 module CukeSlicer
@@ -9,7 +13,7 @@ module CukeSlicer
 
     # private
     def extract_runnable_block_elements(things, filters, &block)
-      Array.new.tap do |elements|
+      [].tap do |elements|
         things.each do |thing|
           if thing.is_a?(CukeModeler::Outline)
             elements.concat(thing.examples)
@@ -29,7 +33,7 @@ module CukeSlicer
 
     # private
     def extract_runnable_elements(things)
-      Array.new.tap do |elements|
+      [].tap do |elements|
         things.each do |thing|
           if thing.is_a?(CukeModeler::Example)
             # Slicing in order to remove the parameter row element
@@ -43,3 +47,4 @@ module CukeSlicer
 
   end
 end
+# rubocop:enable Metrics/AbcSize

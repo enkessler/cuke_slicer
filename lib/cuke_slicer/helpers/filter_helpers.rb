@@ -9,58 +9,58 @@ module CukeSlicer
 
     # private
     def apply_custom_filter(elements, &block)
-      if block
-        elements.reject! do |element|
-          block.call(element)
-        end
+      return unless block
+
+      elements.reject! do |element|
+        yield(element)
       end
     end
 
     # private
     def filter_excluded_tags(elements, filters)
-      if filters
-        filters = [filters] unless filters.is_a?(Array)
+      return unless filters
 
-        unless filters.empty?
-          elements.reject! do |element|
-            matching_tag?(element, filters)
-          end
-        end
+      filters = [filters] unless filters.is_a?(Array)
+
+      return if filters.empty?
+
+      elements.reject! do |element|
+        matching_tag?(element, filters)
       end
     end
 
     # private
     def filter_included_tags(elements, filters)
-      if filters
-        filters = [filters] unless filters.is_a?(Array)
+      return unless filters
 
-        elements.keep_if do |element|
-          matching_tag?(element, filters)
-        end
+      filters = [filters] unless filters.is_a?(Array)
+
+      elements.keep_if do |element|
+        matching_tag?(element, filters)
       end
     end
 
     # private
     def filter_excluded_paths(elements, filters)
-      if filters
-        filters = [filters] unless filters.is_a?(Array)
+      return unless filters
 
-        elements.reject! do |element|
-          matching_path?(element, filters)
-        end
+      filters = [filters] unless filters.is_a?(Array)
+
+      elements.reject! do |element|
+        matching_path?(element, filters)
       end
     end
 
     # private
     def filter_included_paths(elements, filters)
-      if filters
-        filters = [filters] unless filters.is_a?(Array)
+      return unless filters
 
-        unless filters.empty?
-          elements.keep_if do |element|
-            matching_path?(element, filters)
-          end
-        end
+      filters = [filters] unless filters.is_a?(Array)
+
+      return if filters.empty?
+
+      elements.keep_if do |element|
+        matching_path?(element, filters)
       end
     end
 

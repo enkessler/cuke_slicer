@@ -6,7 +6,7 @@ module CukeSlicer
 
     # private
     def extract(target, filters, format, &block)
-      Array.new.tap do |test_cases|
+      [].tap do |test_cases|
         target.feature_files.each do |feature_file|
           test_cases.concat(FileExtractor.new.extract(feature_file, filters, format, &block))
         end

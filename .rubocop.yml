@@ -1,5 +1,3 @@
-inherit_from: .rubocop_todo.yml
-
 AllCops:
   TargetRubyVersion: 2.0
 
@@ -41,3 +39,15 @@ Metrics/BlockLength:
     - 'testing/rspec/spec/**/*' # RSpec suites are inherently a bunch of large, nested blocks
     - 'cuke_slicer.gemspec'     # As is a gemspec
     - 'rakefiles/**/*'          # As are Rake namespaces
+
+# Still within understanding as long as other complexity cops aren't triggering
+Metrics/MethodLength:
+  Max: 15
+
+Style/Documentation:
+  Exclude:
+    - 'testing/rspec/spec/**/*' # Random fake/monkey patch classes for tests don't need documentation
+
+# Non-specific exception handling is fine
+Lint/RescueWithoutErrorClass:
+  Enabled: false

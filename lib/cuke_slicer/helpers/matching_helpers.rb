@@ -7,11 +7,11 @@ module CukeSlicer
     # private
     def matching_tag?(element, filters)
       filters.each do |filter|
-        if filter.is_a?(Array)
-          filter_match = or_filter_match(element, filter)
-        else
-          filter_match = and_filter_match(element, filter)
-        end
+        filter_match = if filter.is_a?(Array)
+                         or_filter_match(element, filter)
+                       else
+                         and_filter_match(element, filter)
+                       end
 
         return false unless filter_match
       end

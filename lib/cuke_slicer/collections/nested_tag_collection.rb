@@ -1,4 +1,4 @@
-require "cuke_slicer/helpers/helpers"
+require 'cuke_slicer/helpers/helpers'
 
 
 # Internal helper module that is not part of the public API. Subject to change at any time.
@@ -10,15 +10,15 @@ module CukeSlicer
     include Helpers
 
 
-    def initialize collection
+    def initialize(collection)
       self.nested_collection = collection
     end
 
     # private
     def validate
       nested_collection.each do |element|
-        raise(ArgumentError, "Tag filters cannot be nested more than one level deep.") if element.is_a?(Array)
-        raise(ArgumentError, "Filter '#{element}' must be a String or Regexp. Got #{element.class}") unless str_regex?(element)
+        raise(ArgumentError, 'Tag filters cannot be nested more than one level deep.') if element.is_a?(Array)
+        raise(ArgumentError, "Filter '#{element}' must be a String or Regexp. Got #{element.class}") unless str_regex?(element) # rubocop:disable Metrics/LineLength
       end
     end
 

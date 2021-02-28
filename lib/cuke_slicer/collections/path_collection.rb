@@ -1,4 +1,4 @@
-require "cuke_slicer/helpers/helpers"
+require 'cuke_slicer/helpers/helpers'
 
 
 # Internal helper module that is not part of the public API. Subject to change at any time.
@@ -10,7 +10,7 @@ module CukeSlicer
     include Helpers
 
 
-    def initialize filter_values
+    def initialize(filter_values)
       self.filter_values = filter_values
     end
 
