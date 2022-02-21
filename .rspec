@@ -2,7 +2,6 @@
 <% require "#{__dir__}/cuke_slicer_project_settings" %>
 
 --tag ~@wip
---pattern "testing/rspec/spec/**/*_spec.rb"
 --force-color
 --format html --out <%= ENV['CUKE_SLICER_REPORT_FOLDER'] %>/<%= ENV['CUKE_SLICER_RSPEC_REPORT_HTML_FILE'] %>
 --format progress
