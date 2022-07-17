@@ -10,4 +10,14 @@ namespace 'cuke_slicer' do
     puts Rainbow("I'd ship it. B)").green
   end
 
+  desc 'Builds the gem and tags the current commit as a release commit'
+  task :build_and_tag do
+    puts Rainbow('Building gem for release...').cyan
+    CukeSlicer::CukeSlicerHelper.run_command(['gem', 'build', 'cuke_slicer.gemspec'])
+
+    release_tag = "v#{CukeSlicer::VERSION}"
+    puts Rainbow("Tagging commit as '#{release_tag}'").cyan
+    CukeSlicer::CukeSlicerHelper.run_command(['git', 'tag', release_tag])
+  end
+
 end
