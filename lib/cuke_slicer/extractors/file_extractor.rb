@@ -19,6 +19,7 @@ module CukeSlicer
       [].tap do |test_cases|
         unless target.feature.nil?
           tests = target.feature.tests
+          tests += target.feature.rules.flat_map(&:tests)
 
           runnable_elements = extract_runnable_elements(extract_runnable_block_elements(tests, filters, &block))
 
