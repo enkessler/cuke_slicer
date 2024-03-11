@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+ - Tests inside of `Rule` elements are now taken into account when slicing.
+
 ### Removed
   - Removed support for some older versions of the gem's dependencies:
     - Ruby 1.x

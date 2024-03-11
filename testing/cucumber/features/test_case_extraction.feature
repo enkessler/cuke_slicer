@@ -82,3 +82,25 @@ Feature: Test case extraction
     And the test cases are to be extracted as objects
     When test cases are extracted from it
     Then the test cases are provided as objects
+
+  Scenario: Extract tests in Rules
+    Given the following feature file "a_test.feature":
+      """
+      Feature: A test feature
+
+        Scenario: Test 1
+          * some steps
+
+        Rule: Rule 1
+          Scenario Outline: Test 2
+            * some steps
+          Examples: Block 1
+            | param | value |
+            | a     | 1     |
+            | b     | 2     |
+      """
+    When test cases are extracted from it
+    Then the following test cases are found
+      | path/to/a_test.feature:3  |
+      | path/to/a_test.feature:11 |
+      | path/to/a_test.feature:12 |

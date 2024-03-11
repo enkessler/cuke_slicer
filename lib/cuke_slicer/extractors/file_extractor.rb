@@ -18,7 +18,9 @@ module CukeSlicer
     def extract(target, filters, format, &block)
       [].tap do |test_cases|
         unless target.feature.nil?
+          # Note: Rules didn't get added until CukeModeler 3.2.0
           tests = target.feature.tests
+          tests += target.feature.rules.flat_map(&:tests) if target.feature.respond_to?(:rules)
 
           runnable_elements = extract_runnable_elements(extract_runnable_block_elements(tests, filters, &block))
 

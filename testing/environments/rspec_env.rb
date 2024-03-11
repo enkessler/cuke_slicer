@@ -23,4 +23,7 @@ RSpec.configure do |config|
       FileUtils.remove_entry(dir_path, true)
     end
   end
+
+  # Methods will be available outside of tests
+  include CukeSlicer::HelperMethods
 end

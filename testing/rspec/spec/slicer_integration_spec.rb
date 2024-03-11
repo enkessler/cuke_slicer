@@ -75,6 +75,22 @@ RSpec.describe 'Slicer, Integration' do
       expect { slicer.slice(test_file, :file_line) }.to_not raise_error
     end
 
+    # CukeModeler can't handle Rules until 3.x
+    it 'can slice a feature that has rules', if: cuke_modeler?(3) do
+      file_text = 'Feature:
+
+                     Scenario:
+                       * a step
+
+                     Rule:
+                       Scenario:
+                         * a step'
+
+      File.write(test_file, file_text)
+
+      expect(slicer.slice(test_file, :file_line)).to match_array(["#{test_file}:3", "#{test_file}:7"])
+    end
+
     it 'can slice a directory that contains non-feature files' do
       File.open("#{@default_file_directory}/not_a_feature.file", 'w') { |file| file.write('foobar') }
 
