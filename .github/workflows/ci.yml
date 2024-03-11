@@ -47,6 +47,10 @@ jobs:
             # A version of Ubuntu without the Bundler error on Ruby 2.2
           - os: 'ubuntu-20.04'
             ruby-version: '2.2'
+            gemfile: cuke_modeler1
+          - os: 'ubuntu-20.04'
+            ruby-version: '2.2'
+            gemfile: cuke_modeler2
 
     runs-on: ${{ matrix.os }}
     env: # $BUNDLE_GEMFILE must be set at the job level, so it is set for all steps
