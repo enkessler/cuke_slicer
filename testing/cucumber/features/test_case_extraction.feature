@@ -83,6 +83,7 @@ Feature: Test case extraction
     When test cases are extracted from it
     Then the test cases are provided as objects
 
+  @cuke_modeler_min_version_3
   Scenario: Extract tests in Rules
     Given the following feature file "a_test.feature":
       """
