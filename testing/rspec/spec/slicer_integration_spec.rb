@@ -75,7 +75,8 @@ RSpec.describe 'Slicer, Integration' do
       expect { slicer.slice(test_file, :file_line) }.to_not raise_error
     end
 
-    it 'can slice a feature that has rules' do
+    # CukeModeler 1.x can't handle Rules
+    it 'can slice a feature that has rules', if: cuke_modeler?(1) do
       file_text = 'Feature:
 
                      Scenario:
