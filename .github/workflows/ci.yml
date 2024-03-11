@@ -39,6 +39,15 @@ jobs:
           - os: windows-latest
             ruby-version: '2.3'
 
+          # Bundle install is broken on Ruby 2.2 for the latest Ubuntu (https://github.com/ruby/setup-ruby/issues/496). Use an older Ubuntu instead (see below).
+          - os: ubuntu-latest
+            ruby-version: '2.2'
+
+        include:
+            # A version of Ubuntu without the Bundler error on Ruby 2.2
+          - os: 'ubuntu-20.04'
+            ruby-version: '2.2'
+
     runs-on: ${{ matrix.os }}
     env: # $BUNDLE_GEMFILE must be set at the job level, so it is set for all steps
       BUNDLE_GEMFILE: testing/gemfiles/${{ matrix.gemfile }}.gemfile
