@@ -76,7 +76,7 @@ RSpec.describe 'Slicer, Integration' do
     end
 
     # CukeModeler 1.x can't handle Rules
-    it 'can slice a feature that has rules', if: cuke_modeler?(1) do
+    it 'can slice a feature that has rules', if: cuke_modeler?(2..3) do
       file_text = 'Feature:
 
                      Scenario:
