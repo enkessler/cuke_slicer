@@ -11,9 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
   - Removed support for some older versions of the gem's dependencies:
-    - Ruby 1.x
-    - CukeModeler 0.x
-
+    - CukeModeler `0.x`, CukeModeler `1.x`, and CukeModeler `2.x`. Slicing features with `Rule` elements requires at
+      least CukeModeler 3.x, because that is the major version that first modeled rules.
+    - Ruby `1.x`. Testing against older Rubies in the current CI ecosystem has become too burdensome and Ruby `1.x` is 
+      long past end-of-life. Additionally, CukeModeler `3.x` requires at least Ruby `2.x`.
+    
 ### Changed
   - No longer including every file in the Git repository as part of the gem. Only the files needed for using the 
     gem (and the informative ones like the README) will be packaged into the released gem.
