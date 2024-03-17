@@ -60,6 +60,14 @@ Or install it yourself as:
 
     system('cucumber @tests_to_run.txt')
 
+In addition to tag and path filters, a block can be used for filtering tests by inspecting the 
+underlying CukeModeler models that represent test cases and filtering on whatever criteria you can think up.
+
+    CukeSlicer::Slicer.new.slice(test_directory, {}, :file_line) do |test_case|
+      test_case.is_a?(CukeModeler::Scenario) &&
+      test_case.get_ancestor(:feature).name =~ /first/
+    end
+
 
 ## Development and Contributing
 
