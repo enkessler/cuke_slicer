@@ -6,13 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+Nothing yet...
+
+
+## [3.0.0] - 2024-03-17
+
 ### Added
  - Tests inside of `Rule` elements are now taken into account when slicing.
 
 ### Removed
   - Removed support for some older versions of the gem's dependencies:
     - CukeModeler `0.x`, CukeModeler `1.x`, and CukeModeler `2.x`. Slicing features with `Rule` elements requires at
-      least CukeModeler 3.x, because that is the major version that first modeled rules.
+      least CukeModeler `3.x`, because that is the major version that first modeled rules.
     - Ruby `1.x`. Testing against older Rubies in the current CI ecosystem has become too burdensome and Ruby `1.x` is 
       long past end-of-life. Additionally, CukeModeler `3.x` requires at least Ruby `2.x`.
     
@@ -69,7 +74,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
  - Initial release
 
-[Unreleased]: https://github.com/enkessler/cuke_slicer/compare/v2.2.0...HEAD
+[Unreleased]: https://github.com/enkessler/cuke_slicer/compare/v3.0.0...HEAD
+[3.0.0]: https://github.com/enkessler/cuke_slicer/compare/v2.2.0...v3.0.0
 [2.2.0]: https://github.com/enkessler/cuke_slicer/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/enkessler/cuke_slicer/compare/v2.0.3...v2.1.0
 [2.0.3]: https://github.com/enkessler/cuke_slicer/compare/v2.0.2...v2.0.3
