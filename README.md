@@ -4,13 +4,13 @@ Basic stuff:
 [![Downloads](https://img.shields.io/gem/dt/cuke_slicer.svg)](https://rubygems.org/gems/cuke_slicer)
 
 User stuff:
+[![Cucumber Docs](http://img.shields.io/badge/Documentation-Features-green.svg)](https://github.com/enkessler/cuke_slicer/tree/master/testing/cucumber/features)
 [![Yard Docs](http://img.shields.io/badge/Documentation-API-blue.svg)](https://www.rubydoc.info/gems/cuke_slicer)
 
 Developer stuff:
 [![Build Status](https://github.com/enkessler/cuke_slicer/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/enkessler/cuke_slicer/actions/workflows/ci.yml?query=branch%3Amaster)
 [![Coverage Status](https://coveralls.io/repos/github/enkessler/cuke_slicer/badge.svg?branch=master)](https://coveralls.io/github/enkessler/cuke_slicer?branch=master)
 [![Maintainability](https://api.codeclimate.com/v1/badges/14c5ad2f8583be273418/maintainability)](https://codeclimate.com/github/enkessler/cuke_slicer/maintainability)
-[![Inline docs](http://inch-ci.org/github/enkessler/cuke_slicer.svg?branch=master)](https://inch-ci.org/github/enkessler/cuke_slicer)
 
 ---
 
