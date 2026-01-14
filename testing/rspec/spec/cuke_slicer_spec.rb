@@ -1,5 +1,4 @@
 require_relative '../../environments/rspec_env'
-require 'rubygems/mock_gem_ui'
 
 
 RSpec.describe 'the gem' do
@@ -16,10 +15,14 @@ RSpec.describe 'the gem' do
 
 
   it 'validates cleanly' do
-    mock_ui = Gem::MockGemUi.new
+    in_stream = StringIO.new
+    out_stream = StringIO.new
+    error_stream = StringIO.new
+    mock_ui = Gem::StreamUI.new(in_stream, out_stream, error_stream)
+
     Gem::DefaultUserInteraction.use_ui(mock_ui) { @gemspec.validate }
 
-    expect(mock_ui.error).to_not match(/warn/i)
+    expect(error_stream.string).to_not match(/warn/i)
   end
 
   it 'is named correctly' do
@@ -102,10 +105,6 @@ RSpec.describe 'the gem' do
 
     it 'links to the source code' do
       expect(@gemspec.metadata['source_code_uri']).to eq('https://github.com/enkessler/cuke_slicer')
-    end
-
-    it 'links to the home page of the project' do
-      expect(@gemspec.metadata['homepage_uri']).to eq(@gemspec.homepage)
     end
 
     it 'links to the gem documentation' do

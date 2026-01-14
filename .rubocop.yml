@@ -1,5 +1,5 @@
 AllCops:
-  TargetRubyVersion: 2.0
+  TargetRubyVersion: 2.3
 
 # Cops that are being modified because whitespace helps with readability
 Layout/CaseIndentation:
@@ -26,7 +26,7 @@ Style/EmptyCaseCondition:
   Enabled: false
 
 # Most people will be looking at the code in a text editor, not a terminal
-Metrics/LineLength:
+Layout/LineLength:
   Max: 120
 
 # The test code is safe to evaluate
@@ -49,5 +49,5 @@ Style/Documentation:
     - 'testing/rspec/spec/**/*' # Random fake/monkey patch classes for tests don't need documentation
 
 # Non-specific exception handling is fine
-Lint/RescueWithoutErrorClass:
+Style/RescueStandardError:
   Enabled: false

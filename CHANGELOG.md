@@ -19,7 +19,7 @@ Nothing yet...
     - CukeModeler `0.x`, CukeModeler `1.x`, and CukeModeler `2.x`. Slicing features with `Rule` elements requires at
       least CukeModeler `3.x`, because that is the major version that first modeled rules.
     - Ruby `1.x`. Testing against older Rubies in the current CI ecosystem has become too burdensome and Ruby `1.x` is 
-      long past end-of-life. Additionally, CukeModeler `3.x` requires at least Ruby `2.x`.
+      long past end-of-life. Additionally, CukeModeler `3.x` requires at least Ruby `2.3`.
     
 ### Changed
   - No longer including every file in the Git repository as part of the gem. Only the files needed for using the 
