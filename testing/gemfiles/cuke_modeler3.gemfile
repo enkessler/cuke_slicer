@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-gemspec :path => "../../"
+gemspec path: '../../'
 
 # The version of CukeModeler being tested
 gem 'cuke_modeler', '~> 3.0'

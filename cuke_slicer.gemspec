@@ -1,4 +1,4 @@
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'cuke_slicer/version'
 
@@ -15,10 +15,11 @@ Gem::Specification.new do |spec|
   spec.license       = 'MIT'
 
   spec.metadata = {
-    'bug_tracker_uri'   => 'https://github.com/enkessler/cuke_slicer/issues',
-    'changelog_uri'     => 'https://github.com/enkessler/cuke_slicer/blob/master/CHANGELOG.md',
-    'documentation_uri' => 'https://www.rubydoc.info/gems/cuke_slicer',
-    'source_code_uri'   => 'https://github.com/enkessler/cuke_slicer'
+    'bug_tracker_uri'       => 'https://github.com/enkessler/cuke_slicer/issues',
+    'changelog_uri'         => 'https://github.com/enkessler/cuke_slicer/blob/master/CHANGELOG.md',
+    'documentation_uri'     => 'https://www.rubydoc.info/gems/cuke_slicer',
+    'source_code_uri'       => 'https://github.com/enkessler/cuke_slicer',
+    'rubygems_mfa_required' => 'true'
   }
 
   # Specify which files should be added to the gem when it is released.
@@ -34,16 +35,16 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'cuke_modeler', '>= 3.2', '< 4.0'
 
+  spec.add_development_dependency 'bundler', '< 5.0'
   spec.add_development_dependency 'childprocess', '< 6.0'
+  spec.add_development_dependency 'cucumber', '< 11.0.0'
   # TODO: Is FFI still needed?
   spec.add_development_dependency 'ffi', '< 2.0' # This is an invisible dependency for the `childprocess` gem on Windows
-  spec.add_development_dependency 'bundler', '< 5.0'
+  spec.add_development_dependency 'rainbow', '< 4.0.0'
   spec.add_development_dependency 'rake', '< 14.0.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
-  spec.add_development_dependency 'cucumber', '< 11.0.0'
+  spec.add_development_dependency 'rubocop', '<2'
   spec.add_development_dependency 'simplecov', '< 1.0.0'
   spec.add_development_dependency 'simplecov-lcov', '< 1.0'
-  spec.add_development_dependency 'rainbow', '< 4.0.0'
-  spec.add_development_dependency 'rubocop', '<2'
   spec.add_development_dependency 'yard', '< 1.0'
 end

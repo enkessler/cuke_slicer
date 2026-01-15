@@ -19,6 +19,7 @@ module CukeSlicer
     def validate
       filter_values.each do |val|
         raise(ArgumentError, "Filter '#{val}' must be a String, Regexp, or Array. Got #{val.class}") unless str_regex_arr?(val) # rubocop:disable Metrics/LineLength
+
         NestedTagCollection.new(val).validate if val.is_a?(Array)
       end
     end

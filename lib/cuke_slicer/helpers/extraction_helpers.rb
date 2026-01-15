@@ -1,5 +1,4 @@
 # TODO: get rid of this module
-# rubocop:disable Metrics/AbcSize
 
 
 # Internal helper module that is not part of the public API. Subject to change at any time.
@@ -47,4 +46,3 @@ module CukeSlicer
 
   end
 end
-# rubocop:enable Metrics/AbcSize

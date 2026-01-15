@@ -3,7 +3,7 @@ require 'cuke_slicer/extractors/file_extractor'
 require 'cuke_slicer/filters/filter_set'
 
 # TODO: refactor all of this
-# rubocop:disable Metrics/AbcSize, Style/OptionalArguments
+# rubocop:disable Style/OptionalArguments
 module CukeSlicer
 
   # The object responsible for slicing up a Cucumber test suite into discrete test cases.
@@ -34,6 +34,7 @@ module CukeSlicer
         target = File.directory?(target) ? CukeModeler::Directory.new(target) : CukeModeler::FeatureFile.new(target)
       rescue => e
         raise e unless e.message =~ /lexing|parsing/i
+
         raise(ArgumentError, "A syntax or lexing problem was encountered while trying to parse #{target}")
       end
 
@@ -71,4 +72,4 @@ module CukeSlicer
 
   end
 end
-# rubocop:enable Metrics/AbcSize, Style/OptionalArguments
+# rubocop:enable Style/OptionalArguments

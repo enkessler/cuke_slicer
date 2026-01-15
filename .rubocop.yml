@@ -1,5 +1,8 @@
 AllCops:
+  # The oldest version of Ruby supported by this gem
   TargetRubyVersion: 2.3
+  # Gotta catch 'em all!
+  NewCops: enable
 
 # Cops that are being modified because whitespace helps with readability
 Layout/CaseIndentation:
@@ -34,11 +37,18 @@ Security/Eval:
   Exclude:
     - 'testing/**/*'
 
+Layout/HashAlignment:
+  EnforcedHashRocketStyle: table
+
 Metrics/BlockLength:
   Exclude:
     - 'testing/rspec/spec/**/*' # RSpec suites are inherently a bunch of large, nested blocks
     - 'cuke_slicer.gemspec'     # As is a gemspec
     - 'rakefiles/**/*'          # As are Rake namespaces
+
+# If Ruby suddenly changes, that's its fault.
+Style/FrozenStringLiteralComment:
+  Enabled: false
 
 # Still within understanding as long as other complexity cops aren't triggering
 Metrics/MethodLength:
@@ -47,7 +57,18 @@ Metrics/MethodLength:
 Style/Documentation:
   Exclude:
     - 'testing/rspec/spec/**/*' # Random fake/monkey patch classes for tests don't need documentation
+Style/DocumentDynamicEvalDefinition:
+  Exclude:
+    - 'testing/cucumber/step_definitions/**/*' # Random fake test data don't need documentation
 
 # Non-specific exception handling is fine
 Style/RescueStandardError:
+  Enabled: false
+
+# The gemspec is the source of truth for a gem
+Gemspec/DevelopmentDependencies:
+  EnforcedStyle: gemspec
+# Easily distinguishing between runtime and development dependencies is important
+# when they live in the same place.
+Gemspec/AddRuntimeDependency:
   Enabled: false

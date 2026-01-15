@@ -74,7 +74,7 @@ end
 When(/^test cases are extracted from "([^"]*)" using the following custom filter:$/) do |target, filter_block|
   @output ||= {}
 
-  custom_filter = eval("Proc.new #{filter_block}")
+  custom_filter = eval("proc #{filter_block}", binding, __FILE__, __LINE__)
 
   @output[target] = CukeSlicer::Slicer.new.slice("#{@default_file_directory}/#{target}", :file_line, &custom_filter)
 end
@@ -83,7 +83,7 @@ When(/^test cases are extracted from "([^"]*)" using "([^"]*)"$/) do |target, in
   @output ||= {}
   options = {}
 
-  options[:included_tags] = eval("[#{included_tag_filters}]")
+  options[:included_tags] = eval("[#{included_tag_filters}]", binding, __FILE__, __LINE__)
 
   @output[target] = CukeSlicer::Slicer.new.slice("#{@default_file_directory}/#{target}", options, :file_line)
 end

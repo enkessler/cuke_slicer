@@ -64,13 +64,13 @@ RSpec.describe 'Slicer, Integration' do
     end
 
     it 'can slice an empty feature file' do
-      File.open(test_file, 'w') { |file| file.write('') }
+      File.write(test_file, '')
 
       expect { slicer.slice(test_file, :file_line) }.to_not raise_error
     end
 
     it 'can slice a feature that has no tests' do
-      File.open(test_file, 'w') { |file| file.write('Feature: Empty feature') }
+      File.write(test_file, 'Feature: Empty feature')
 
       expect { slicer.slice(test_file, :file_line) }.to_not raise_error
     end
@@ -91,7 +91,7 @@ RSpec.describe 'Slicer, Integration' do
     end
 
     it 'can slice a directory that contains non-feature files' do
-      File.open("#{@default_file_directory}/not_a_feature.file", 'w') { |file| file.write('foobar') }
+      File.write("#{@default_file_directory}/not_a_feature.file", 'foobar')
 
       expect { slicer.slice(@default_file_directory, :file_line) }.to_not raise_error
     end
@@ -105,7 +105,7 @@ RSpec.describe 'Slicer, Integration' do
       end
 
       it 'complains if told to slice an incorrectly formatted feature file' do
-        File.open(test_file, 'w') { |file| file.write('foobar') }
+        File.write(test_file, 'foobar')
 
         expect { slicer.slice(test_file, :file_line) }
           .to raise_error(ArgumentError, /syntax.*lexing problem.*#{test_file}/i)
@@ -162,9 +162,7 @@ RSpec.describe 'Slicer, Integration' do
         not_provided = slicer.slice(test_file, :file_line)
 
         case
-          when filter.to_s =~ /path/
-            nothing_provided = slicer.slice(test_file, { filter => [] }, :file_line)
-          when filter.to_s =~ /tag/
+          when (filter.to_s =~ /path/) || (filter.to_s =~ /tag/)
             nothing_provided = slicer.slice(test_file, { filter => [] }, :file_line)
           else
             raise(ArgumentError, "Unknown filter '#{filter}'")
@@ -183,7 +181,7 @@ RSpec.describe 'Slicer, Integration' do
                           excluded_paths: 'a',
                           included_paths: /./ }
 
-      block_filter = eval('Proc.new { |test_case| false}')
+      block_filter = proc { |_test_case| false }
 
       # A reminder to update this test if new filters are added in the future
       expect(applied_filters.keys).to match_array(filters)
@@ -259,7 +257,6 @@ RSpec.describe 'Slicer, Integration' do
 
           expect do
             slicer.slice(@default_file_directory,
-
                          { filter => ['@some_value', /some_pattern/] },
                          :file_line)
           end

@@ -11,9 +11,7 @@ module CukeSlicer
     def apply_custom_filter(elements, &block)
       return unless block
 
-      elements.reject! do |element|
-        yield(element)
-      end
+      elements.reject!(&block)
     end
 
     # private

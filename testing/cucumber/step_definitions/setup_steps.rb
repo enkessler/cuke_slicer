@@ -5,7 +5,7 @@ Given(/^the following feature file(?: "([^"]*)")?:$/) do |file_name, file_text|
   @targets ||= []
   @targets << file_name
 
-  File.open("#{@test_directory}/#{file_name}", 'w') { |file| file.write(file_text) }
+  File.write("#{@test_directory}/#{file_name}", file_text)
 end
 
 Given(/^the directory "([^"]*)"$/) do |directory_name|
@@ -44,7 +44,7 @@ And(/^the following path filters:$/) do |filters|
 end
 
 And(/^the following custom filter:$/) do |filter|
-  @custom_filter = eval("Proc.new #{filter}")
+  @custom_filter = eval("proc #{filter}", binding, __FILE__, __LINE__)
 end
 
 Given(/^the file "([^"]*)" does not exist$/) do |file_name|
@@ -54,7 +54,7 @@ Given(/^the file "([^"]*)" does not exist$/) do |file_name|
   @targets << file_name
 
   file_path = "#{@test_directory}/#{file_name}"
-  FileUtils.rm(file_path) if File.exist?(file_path)
+  FileUtils.rm_f(file_path)
 end
 
 Given(/^the directory "([^"]*)" does not exist$/) do |directory_name|
@@ -62,7 +62,7 @@ Given(/^the directory "([^"]*)" does not exist$/) do |directory_name|
   @targets << directory_name
 
   file_path = "#{@default_file_directory}/#{directory_name}"
-  FileUtils.remove_dir(file_path) if File.exist?(file_path)
+  FileUtils.rm_rf(file_path)
 end
 
 And(/^the file "([^"]*)"$/) do |file_name|
@@ -71,7 +71,7 @@ And(/^the file "([^"]*)"$/) do |file_name|
   @targets ||= []
   @targets << file_name
 
-  File.open("#{@test_directory}/#{file_name}", 'w') { |file| file.write('') }
+  File.write("#{@test_directory}/#{file_name}", '')
 end
 
 Given(/^a slicer$/) do

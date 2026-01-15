@@ -6,7 +6,7 @@ namespace 'cuke_slicer' do
 
     completed_process = CukeSlicer::CukeSlicerHelper.run_command(['bundle', 'exec', 'rubocop',
                                                                   '--format', 'fuubar',
-                                                                  '--format', 'html', '--out', "#{ENV['CUKE_SLICER_REPORT_FOLDER']}/rubocop.html", # rubocop:disable Metrics/LineLength
+                                                                  '--format', 'html', '--out', "#{ENV.fetch('CUKE_SLICER_REPORT_FOLDER')}/rubocop.html", # rubocop:disable Metrics/LineLength
                                                                   '-S', '-D'])
 
     raise(Rainbow('RuboCop found violations').red) unless completed_process.exit_code.zero?
