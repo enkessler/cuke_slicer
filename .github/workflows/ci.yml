@@ -9,38 +9,6 @@ on:
 
 jobs:
 
-  # Older versions of JRuby aren't available on newer versions of MacOS
-  test_macos_older:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [macos-14]
-        ruby-version: ['jruby-9.1.17.0']
-        gemfile: [ cuke_modeler3 ]
-
-    runs-on: ${{ matrix.os }}
-    env: # $BUNDLE_GEMFILE must be set at the job level, so it is set for all steps
-      BUNDLE_GEMFILE: testing/gemfiles/${{ matrix.gemfile }}.gemfile
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: ${{ matrix.ruby-version }}
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-      - name: Run CI Rake task
-        run: bundle exec rake cuke_slicer:test_everything
-      - name: Push code coverage to Coveralls (conditional)
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.github_token }}
-          path-to-lcov: "./reports/coverage/lcov/lcov.info"
-          parallel: true
-          flag-name: run-${{ matrix.os }}-${{ matrix.ruby-version }}-${{ matrix.gemfile }}
-        # The 'lcov.info' file is not generating correctly on earlier versions of Ruby and it's not worth figuring out why
-        if: matrix.ruby-version != 'jruby-9.1.17.0'
-
   # Earlier Rubies can't handle ARM, so they have to run on AMD
   test_macos_amd:
     strategy:
@@ -234,7 +202,7 @@ jobs:
         if: matrix.ruby-version != '2.3' && matrix.ruby-version != 'jruby-9.1.17.0'
 
   test_finish:
-    needs: [test_macos_older, test_macos_amd, test_macos_arm, test_ubuntu_ruby, test_ubuntu_jruby_older, test_ubuntu_jruby_newer, test_windows]
+    needs: [test_macos_amd, test_macos_arm, test_ubuntu_ruby, test_ubuntu_jruby_older, test_ubuntu_jruby_newer, test_windows]
     runs-on: ubuntu-latest
     steps:
       - name: Coveralls Finished
