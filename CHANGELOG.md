@@ -6,7 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-Nothing yet...
+### Added
+- Ruby 4.x is now supported
 
 
 ## [3.0.0] - 2024-03-17

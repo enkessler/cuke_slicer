@@ -47,7 +47,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [macos-latest]
-        ruby-version: ['2.7', '3.0']
+        ruby-version: ['2.7', '3.0', '4.0']
         gemfile: [ cuke_modeler3 ]
 
     runs-on: ${{ matrix.os }}
@@ -76,7 +76,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        ruby-version: ['2.3', '2.5', '2.7', '3.0']
+        ruby-version: ['2.3', '2.5', '2.7', '3.0', '4.0']
         gemfile: [ cuke_modeler3 ]
 
     runs-on: ${{ matrix.os }}
@@ -168,7 +168,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [windows-latest]
-        ruby-version: ['2.3', '2.5', '2.7', '3.0', 'jruby-9.1.17.0']
+        ruby-version: ['2.3', '2.5', '2.7', '3.0', '4.0', 'jruby-9.1.17.0']
         gemfile: [ cuke_modeler3 ]
         exclude:
           # Just not worth it to get these working and no additional and meaningful proof is provided by these

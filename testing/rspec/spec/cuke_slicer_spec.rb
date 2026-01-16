@@ -186,10 +186,10 @@ RSpec.describe 'the gem' do
   describe 'dependencies' do
 
     # Ruby 2.3 is the minimum version for CukeModeler 3.x, which is the minimum CukeModeler for this gem
-    it 'works with Ruby 2.3 through 3' do
+    it 'works with Ruby 2.3 through 4' do
       ruby_version_limits = @gemspec.required_ruby_version.requirements.map(&:join)
 
-      expect(ruby_version_limits).to match_array(['>=2.3', '<4.0'])
+      expect(ruby_version_limits).to match_array(['>=2.3', '<5.0'])
     end
 
     # CukeModeler 3.2 is the first version that models Rules, which this gem uses
