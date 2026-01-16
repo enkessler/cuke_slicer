@@ -178,6 +178,10 @@ jobs:
           - os: windows-latest
             ruby-version: '2.3'
 
+          # Hitting some kind of JRuby/Windows/ruby-setup/who knows bug
+          - os: windows-latest
+            ruby-version: jruby-9.1.17.0
+
     runs-on: ${{ matrix.os }}
     env: # $BUNDLE_GEMFILE must be set at the job level, so it is set for all steps
       BUNDLE_GEMFILE: testing/gemfiles/${{ matrix.gemfile }}.gemfile
