@@ -40,12 +40,12 @@ jobs:
         # The 'lcov.info' file is not generating correctly on earlier versions of Ruby and it's not worth figuring out why
         if: matrix.ruby-version != '2.3' && matrix.ruby-version != 'jruby-9.1.17.0'
 
-  test_ubuntu:
+  test_ubuntu_ruby:
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        ruby-version: ['2.3', '2.5', '2.7', '3.0', 'jruby-9.1.17.0']
+        ruby-version: ['2.3', '2.5', '2.7', '3.0']
         gemfile: [ cuke_modeler3 ]
 
     runs-on: ${{ matrix.os }}
@@ -69,7 +69,38 @@ jobs:
           parallel: true
           flag-name: run-${{ matrix.os }}-${{ matrix.ruby-version }}-${{ matrix.gemfile }}
         # The 'lcov.info' file is not generating correctly on earlier versions of Ruby and it's not worth figuring out why
-        if: matrix.ruby-version != '2.3' && matrix.ruby-version != 'jruby-9.1.17.0'
+        if: matrix.ruby-version != '2.3'
+
+  test_ubuntu_jruby:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        ruby-version: [ 'jruby-9.1.17.0', 'jruby-9.3.4.0', 'jruby-9.4.12.0']
+        gemfile: [ cuke_modeler3 ]
+
+    runs-on: ${{ matrix.os }}
+    env: # $BUNDLE_GEMFILE must be set at the job level, so it is set for all steps
+      BUNDLE_GEMFILE: testing/gemfiles/${{ matrix.gemfile }}.gemfile
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+      - name: Run CI Rake task
+        run: bundle exec rake cuke_slicer:test_everything
+      - name: Push code coverage to Coveralls (conditional)
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.github_token }}
+          path-to-lcov: "./reports/coverage/lcov/lcov.info"
+          parallel: true
+          flag-name: run-${{ matrix.os }}-${{ matrix.ruby-version }}-${{ matrix.gemfile }}
+        # The 'lcov.info' file is not generating correctly on earlier versions of Ruby and it's not worth figuring out why
+        if: matrix.ruby-version != 'jruby-9.1.17.0'
 
   test_windows:
     strategy:
