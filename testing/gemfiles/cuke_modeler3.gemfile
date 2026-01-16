@@ -7,3 +7,8 @@ gem 'cuke_modeler', '~> 3.0'
 if RUBY_VERSION =~ /^2\.[1234]/
   gem 'activesupport', '< 6.0' # `activesupport` 6.x requires at least Ruby 2.5
 end
+
+if (RUBY_VERSION =~ /^4\./) && (RbConfig::CONFIG['host_os'].downcase =~ /mswin|msys|mingw32/)
+  # win32ole gem stopped being included automatically after Ruby 4.0 and some versions of Cucumber need it
+  gem 'win32ole'
+end
