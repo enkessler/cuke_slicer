@@ -16,6 +16,16 @@ jobs:
         os: [macos-latest]
         ruby-version: ['2.3', '2.5', '2.7', '3.0', 'jruby-9.1.17.0']
         gemfile: [ cuke_modeler3 ]
+        exclude:
+          # Earlier Rubies can't handle ARM...
+          - { os: macos-latest, ruby: '2.3' }
+          - { os: macos-latest, ruby: 'jruby-9.1.17.0' }
+          - { os: macos-latest, ruby: '2.5' }
+        include:
+          # ...so they have to run on AMD
+          - { os: macos-15-intel, ruby: '2.3' }
+          - { os: macos-15-intel, ruby: 'jruby-9.1.17.0' }
+          - { os: macos-15-intel, ruby: '2.5' }
 
     runs-on: ${{ matrix.os }}
     env: # $BUNDLE_GEMFILE must be set at the job level, so it is set for all steps
